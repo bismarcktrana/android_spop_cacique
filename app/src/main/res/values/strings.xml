@@ -1,0 +1,85 @@
+<resources>
+    <string name="app_name">SPOP MOVIL</string>
+
+    <!--FORMULARIO DE INGRESO-->
+    <string name="frmIngreso">ZONA DE INGRESO</string>
+    <string name="p1_lblusuario">Usuario del Sistema</string>
+    <string name="p1_lblClave">Clave del Usuario</string>
+    <string name="p1_lblParametro">Parametro a Modificar</string>
+    <string name="p1_lblValor">Valor del Parametro</string>
+    <string name="p1_lblConfigurar">Configurar Parametros</string>
+    <string name="lblGuardar">Guardar</string>
+    <string name="lblCancelar">Cancelar</string>
+    <string name="lblParametroModificad">Se a modificado el Parametro: [%s]</string>
+    <string name="lblParametroNoExiste">El parametro:[%s],no existe</string>
+    <string name="p1_lblDispositoAutorizado">Dispositivo: [%s], Registrado</string>
+    <string name="p1_lblDispositivoNoAutorizado">Dispositivo: [%s],No Registrado</string>
+    <string name="p1_btnIngresar">INGRESAR</string>
+    <string name="p2_lbllicencia">Licencia</string>
+    <string name="p2_lblNoconectado">No conectado</string>
+    <string name="p2_lblusuario">USUARIO</string>
+    <string name="p2_lblrol">ROL</string>
+    <string name="p2_mnu_salir">Salir</string>
+    <string name="p2_mnu_parametro">Parámetro</string>
+    <!--MENU-->
+
+    <!--FORMULARIO DE INGRESO-->
+
+    <!--FORMULARIO DE BASE DE DATOS-->
+    <string name="frmBD">BASE DE DATOS</string>
+
+    <string name="p03_mnu_borrar">Borrar</string>
+
+    <!--FORMULARIO PRINCIPAL-->
+    <string name="item_orden">PEDIDOS</string>
+    <string name="item_sincronizar">SINCRONIZAR</string>
+    <string name="item_reporte">REPORTES</string>
+    <string name="item_usuario">USUARIO</string>
+    <string name="item_sgbd">BASE DE DATOS</string>
+    <string name="buscar_usuario">Buscar por nombre de usuario</string>
+
+    <!--FORMULARIO SINCRONIZAR-->
+    <string name="btnEnviar">Enviar</string>
+    <string name="btnRecibir">Recibir</string>
+    <string name="lbltitulosincronizar">ENVIO / RECEPCION DE DATOS</string>
+    <string name="lblinfoDevice">HH:001:4124578548544854854V06.03</string>
+
+    <string name="menu_item_producto">Productos</string>
+    <string name="menu_item_pedido">Pedidos</string>
+    <string name="menu_item_bodega">Bodega</string>
+    <string name="menu_item_camion">Camiones</string>
+    <string name="menu_item_conductor">Conductores</string>
+    <string name="menu_item_operador">Operadores de HandHeld</string>
+
+    <string name="dipositivo_noautorizado">Favor autorizar la licencia en el servidor</string>
+    <string name="licencias_excedidas">Se excedio la cantidad de licencias autorizadas</string>
+    <string name="bd_noconcuerda">Licencia de la base de datos no esta disponible</string>
+    <string name="servidor_noconcuerda">Servidor O MAC no disponible</string>
+
+    <!--FORMULARIO ORDEN/PEDIDO-->
+    <string name="i04_lblcliente">CLIENTE</string>
+    <string name="i04_lblOrden"># PEDIDO</string>
+    <string name="i04_lblEstado">ESTADO</string>
+    <string name="i04_lblFecha">FECHA</string>
+    <string name="i04_lblBodega">BODEGA</string>
+    <string name="i04_lblCamion">CAMION</string>
+    <string name="i04_lblMarchamo">MARCHAMO</string>
+    <string name="i04_lblConductor">CONDUCTOR</string>
+
+    <string name="i04_menu_orden">TRABAJAR ORDEN</string>
+    <string name="i04_menu_archivo">BAJAR ARCHIVO DE TEXTO</string>
+    <string name="i04_menu_aperturar">REAPERTURAR ORDEN</string>
+    <string name="i04_menu_reset">REINICIAR ORDEN</string>
+    <string name="i04_menu_actualizar">ACTUALIZAR DESDE EL SERVIDOR</string>
+    <string name="i04_menu_detalle">VER DETALLE ADICIONALES</string>
+
+
+    <!--FORMULARIO LECTURA POR PEDIDO-->
+    <string name="p11_txtCodigoBarra">Buscar codigo</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="menu_borrar">Borrar</string>
+    <string name="menu_borrar_todo">Borrar Todo</string>
+    <string name="menu_mover_caja">Mover caja</string>
+
+
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="button_std_size" format="format">18sp</dimen>
+    <dimen name="std_container_margin">8.0dip</dimen>
+
+    <!--FORMULARIO PRINCIPAL-->
+    <dimen name="button_icon_margin"  format="float">14.0dip</dimen>
+    <dimen name="button_icon_size"  format="float">32.0dip</dimen>
+
+</resources>

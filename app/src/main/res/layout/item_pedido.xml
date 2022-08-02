@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/i04"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/i04_lblCliente"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="@string/i04_lblcliente"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/i04_lblClientenombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="false"
+        android:layout_toEndOf="@+id/i04_lblCliente"
+        android:textColor="@color/zebra_blue"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/i04_lblPedido"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i04_lblClientenombre"
+        android:layout_marginStart="5dp"
+        android:text="@string/i04_lblOrden"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/i04_lblPedidonombre"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i04_lblClientenombre"
+        android:layout_toEndOf="@+id/i04_lblCliente"
+        android:textColor="@color/zebra_blue"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/i04_lblFecha"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i04_lblClientenombre"
+        android:layout_toEndOf="@+id/i04_lblPedidonombre"
+        android:text="@string/i04_lblFecha"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/i04_lblFechanombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i04_lblClientenombre"
+        android:layout_toEndOf="@+id/i04_lblFecha"
+        android:textColor="@color/zebra_blue"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/i04_lblCamion"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i04_lblPedido"
+        android:layout_marginStart="5dp"
+        android:text="@string/i04_lblCamion"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/i04_lblcamionnombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i04_lblPedido"
+        android:layout_toEndOf="@+id/i04_lblCamion"
+        android:textColor="@color/zebra_blue"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/i04_lblConductor"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i04_lblCamion"
+        android:layout_marginStart="5dp"
+        android:text="@string/i04_lblConductor"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/i04_lblConductorNombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i04_lblCamion"
+        android:layout_toEndOf="@+id/i04_lblConductor"
+        android:textColor="@color/zebra_blue"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/i04_lblBodega"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i04_lblConductorNombre"
+        android:layout_marginStart="5dp"
+        android:text="@string/i04_lblBodega"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/i04_lblBodeganombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/i04_lblConductorNombre"
+        android:layout_toEndOf="@+id/i04_lblBodega"
+        android:textColor="@color/zebra_blue"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/i04_lblMarchamo"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i04_lblBodega"
+        android:layout_marginStart="5dp"
+        android:text="@string/i04_lblMarchamo"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/i04_lblMarchamoNombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i04_lblBodega"
+        android:layout_toEndOf="@+id/i04_lblMarchamo"
+        android:textColor="@color/zebra_blue"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/i04_lblEstado"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i04_lblMarchamo"
+        android:layout_marginStart="5dp"
+        android:text="@string/i04_lblEstado"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/i04_lblEstadonombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i04_lblMarchamo"
+        android:layout_toEndOf="@id/i04_lblEstado"
+        android:textColor="@color/zebra_blue"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/view"
+        style="@style/Divider_Horizontal"
+        android:layout_below="@id/i04_lblEstado"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="false"
+        android:layout_marginTop="4dp"
+        android:visibility="visible" />
+
+</RelativeLayout>

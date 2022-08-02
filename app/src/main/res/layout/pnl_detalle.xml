@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/p11_pnlDetalle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PnlDetalle">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/p11_txtLayoutDetalle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="false"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:focusableInTouchMode="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/p11_txtBuscarCodigoBarra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_action_buscar"
+            android:hint="@string/p11_txtCodigoBarra"
+            android:inputType="text"
+            android:textColor="@color/blue"
+            android:textColorHint="@color/green"
+            tools:ignore="TextContrastCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.evrencoskun.tableview.TableView
+        android:id="@+id/p10_tbldetalle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/p11_txtLayoutDetalle"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@android:drawable/editbox_background"
+        app:selected_color="@color/table_view_default_selected_background_color"
+        app:shadow_color="@color/table_view_default_selected_background_color"></com.evrencoskun.tableview.TableView>
+</RelativeLayout>

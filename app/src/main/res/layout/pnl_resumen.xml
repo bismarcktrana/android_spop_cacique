@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/p11_pnlConsolidado"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    tools:context=".PnlConsolidado">
+
+    <RelativeLayout
+        android:id="@+id/p11_pnlinfoOrden"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/p11_lblBodega"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/actionModeSplitBackground"
+            android:gravity="center_vertical"
+            android:text="BODEGA ORIGEN"
+            android:textColor="@color/blue"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/p11_lblBodeganombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/p11_lblBodega"
+            android:background="?android:attr/actionModeSplitBackground"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:text=""
+            android:textColor="@color/cell_text_color"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/p11_lblCamion"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/p11_lblBodega"
+            android:background="?android:attr/actionModeSplitBackground"
+            android:gravity="center_vertical"
+            android:text="CAMION"
+            android:textColor="@color/blue"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/p11_lblCamionnombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/p11_lblBodega"
+            android:layout_toRightOf="@+id/p11_lblCamion"
+            android:background="?android:attr/actionModeSplitBackground"
+            android:drawableEnd="@drawable/ic_action_buscar"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:textColor="@color/cell_text_color"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/p11_lblConductor"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/p11_lblCamionnombre"
+            android:background="?android:attr/actionModeSplitBackground"
+            android:gravity="center_vertical"
+            android:paddingTop="10dp"
+            android:text="CONDUCTOR"
+            android:textColor="@color/zebra_blue"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/p11_lblConductornombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/p11_lblCamionnombre"
+            android:layout_toRightOf="@+id/p11_lblConductor"
+            android:background="?android:attr/actionModeSplitBackground"
+            android:drawableEnd="@drawable/ic_action_buscar"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:textColor="@color/cell_text_color"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/p11_lblMarchamo"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/p11_lblConductornombre"
+            android:background="?android:attr/actionModeSplitBackground"
+            android:gravity="center_vertical"
+            android:paddingTop="10dp"
+            android:text="MARCHAMO"
+            android:textColor="@color/zebra_blue"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/p11_lblMarchamonombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/p11_lblConductornombre"
+            android:layout_toRightOf="@+id/p11_lblMarchamo"
+            android:background="?android:attr/actionModeSplitBackground"
+            android:drawableEnd="@drawable/ic_action_buscar"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:textColor="@color/cell_text_color"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <com.evrencoskun.tableview.TableView
+        android:id="@+id/p11_tblconsolidado"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/p11_pnlinfoOrden"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="70dp"
+        android:background="@android:drawable/editbox_background"
+        app:selected_color="@color/table_view_default_selected_background_color"
+        app:shadow_color="@color/table_view_default_selected_background_color"></com.evrencoskun.tableview.TableView>
+
+    <Button
+        android:id="@+id/p11_btnFinalizar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/p11_tblconsolidado"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="-60dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/zebra_blue"
+        android:text="Finalizar Orden"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp" />
+</RelativeLayout>

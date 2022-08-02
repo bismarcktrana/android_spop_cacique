@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".FrmIngreso">
+    <item
+        android:id="@+id/m01_action_salir"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="@string/p2_mnu_salir"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/m01_action_parameter"
+        android:title="@string/p2_mnu_parametro"
+        app:showAsAction="never" />
+</menu>

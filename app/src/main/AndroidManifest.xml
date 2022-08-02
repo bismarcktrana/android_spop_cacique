@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sdn.cacique.spop">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/img_logo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/img_logo"
+        android:screenOrientation="landscape"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".FrmEscaneoxPedido"
+            android:exported="true" />
+        <activity
+            android:name=".FrmOrden"
+            android:exported="true" />
+        <activity
+            android:name=".FrmSincronizar"
+            android:exported="true" />
+        <activity
+            android:name=".FrmBaseDeDatos"
+            android:exported="true" />
+        <activity
+            android:name=".FrmPrincipal"
+            android:exported="true" />
+        <activity
+            android:name=".FrmIngreso"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

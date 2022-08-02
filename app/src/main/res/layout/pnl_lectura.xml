@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PnlLectura"
+    android:layout_margin="5dp">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/p11_contenedortxtCodigoBarra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="false"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:focusableInTouchMode="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/p11_txtCodigoBarra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_action_buscar"
+                android:hint="@string/p11_txtCodigoBarra"
+                android:inputType="text"
+                android:textColor="@color/blue"
+                android:textColorHint="@color/green"
+                tools:ignore="TextContrastCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/p11_contenedortxtCodigoBarra"
+            android:scrollbarAlwaysDrawHorizontalTrack="true"
+            android:scrollbarSize="30dp"
+            android:scrollbarStyle="insideOverlay"
+            android:smoothScrollbar="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/p11_contenedortxtCodigoBarra"
+                    android:background="@android:drawable/editbox_background">
+<!--
+                    <LinearLayout
+                        android:id="@+id/p11_pnlEstiba"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="false"
+                        android:layout_marginTop="5dp"
+                        android:onClick="CambiarCamion"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/p11_lblEstiba"
+                            android:layout_width="match_parent"
+                            android:layout_height="28dp"
+                            android:background="?android:attr/actionModeSplitBackground"
+                            android:gravity="center_vertical"
+                            android:text="CAMION"
+                            android:textColor="@color/blue"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/p11_lblestibanombre"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/p11_lblfechasacrificio"
+                            android:layout_alignParentRight="false"
+                            android:layout_marginLeft="-1dp"
+                            android:layout_marginTop="-10dp"
+                            android:layout_marginRight="-1dp"
+                            android:layout_toRightOf="@+id/p11_lblfechaproceso"
+                            android:background="@android:drawable/editbox_background"
+                            android:elevation="0dp"
+                            android:text="0"
+                            android:textAlignment="center"
+                            android:textColor="@color/blue"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/p11_pnlConfiguracion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="false"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/p11_pnlEstiba"
+                        android:onClick="CambiarConifguracion"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/p11_lblConfiguracion"
+                            android:layout_width="match_parent"
+                            android:layout_height="28dp"
+                            android:background="?android:attr/actionModeSplitBackground"
+                            android:text="CONDUCTOR"
+                            android:textAlignment="center"
+                            android:textColor="@color/blue"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/p11_lblconfiguracionnombre"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/p11_lblfechasacrificio"
+                            android:layout_alignParentRight="false"
+                            android:layout_marginLeft="-1dp"
+                            android:layout_marginTop="-10dp"
+                            android:layout_marginRight="-1dp"
+                            android:layout_toRightOf="@+id/p11_lblfechaproceso"
+                            android:background="@android:drawable/editbox_background"
+                            android:text="0"
+                            android:textAlignment="center"
+                            android:textColor="@color/blue"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                    android:layout_below="@+id/p11_pnlEstiba"
+-->
+                    <TextView
+                        android:id="@+id/p11_lblcodigo"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:background="?android:attr/actionModeSplitBackground"
+                        android:gravity="center_vertical"
+                        android:text="CODIGO"
+                        android:textColor="@color/blue"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/p11_lblcodigonombre"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/p11_pnlConfiguracion"
+                        android:layout_alignParentRight="true"
+                        android:layout_toRightOf="@+id/p11_lblcodigo"
+                        android:background="?android:attr/actionModeSplitBackground"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/design_default_color_primary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/p11_lblDescripcion"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/p11_lblcodigonombre"
+                        android:layout_marginTop="5dp"
+                        android:background="?android:attr/actionModeSplitBackground"
+                        android:gravity="center_vertical"
+                        android:text="DESCRIPCION"
+                        android:textColor="@color/blue"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/p11_lblDescripcionnombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/p11_lblcodigonombre"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_toRightOf="@+id/p11_lblDescripcion"
+                        android:background="?android:attr/actionModeSplitBackground"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/red"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/p11_lblcaja"
+                        android:layout_width="130dp"
+                        android:layout_height="40dp"
+                        android:layout_below="@+id/p11_lblDescripcionnombre"
+                        android:layout_centerVertical="false"
+                        android:layout_marginTop="2dp"
+                        android:background="?android:attr/actionModeSplitBackground"
+                        android:gravity="center_vertical"
+                        android:text="CAJA"
+                        android:textColor="@color/blue"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/p11_lblcajanombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_below="@id/p11_lblDescripcionnombre"
+                        android:layout_alignParentEnd="false"
+                        android:layout_marginTop="2dp"
+                        android:layout_toEndOf="@+id/p11_lblcaja"
+                        android:background="?android:attr/actionModeSplitBackground"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/zebra_blue"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/p11_lblpeso"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/p11_lblcaja"
+                        android:layout_marginTop="5dp"
+                        android:background="?android:attr/actionModeSplitBackground"
+                        android:gravity="center_vertical"
+                        android:text="PESO"
+                        android:textColor="@color/blue"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/p11_lblpesonombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/p11_lblcaja"
+                        android:layout_alignParentRight="false"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/p11_lblpeso"
+                        android:background="?android:attr/actionModeSplitBackground"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/red"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/p11_lbllote"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/p11_lblpeso"
+                        android:layout_marginTop="5dp"
+                        android:background="?android:attr/actionModeSplitBackground"
+                        android:gravity="center_vertical"
+                        android:text="# SUBLOTE"
+                        android:textColor="@color/blue"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/p11_lbllotenombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/p11_lblpeso"
+                        android:layout_alignParentRight="false"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/p11_lbllote"
+                        android:background="?android:attr/actionModeSplitBackground"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/design_default_color_primary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/p11_lblsublote"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/p11_lbllote"
+                        android:layout_marginTop="5dp"
+                        android:background="?android:attr/actionModeSplitBackground"
+                        android:gravity="center_vertical"
+                        android:text="SERIE"
+                        android:textColor="@color/blue"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/p11_lblsublotenombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/p11_lbllote"
+                        android:layout_alignParentRight="false"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/p11_lblsublote"
+                        android:background="?android:attr/actionModeSplitBackground"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/design_default_color_primary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/p11_lblfechasacrificio"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/p11_lblsublote"
+                        android:layout_marginTop="5dp"
+                        android:background="?android:attr/actionModeSplitBackground"
+                        android:gravity="center_vertical"
+                        android:text="FECHA SACRIFICIO"
+                        android:textColor="@color/blue"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/p11_lblfechasacrificionombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/p11_lblsublote"
+                        android:layout_alignParentRight="false"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/p11_lblfechasacrificio"
+                        android:background="?android:attr/actionModeSplitBackground"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/zebra_blue"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/p11_lblfechaproceso"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/p11_lblfechasacrificio"
+                        android:layout_marginTop="5dp"
+                        android:background="?android:attr/actionModeSplitBackground"
+                        android:gravity="center_vertical"
+                        android:text="FECHA PROCESO"
+                        android:textColor="@color/blue"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/p11_lblfechaprocesonombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/p11_lblfechasacrificio"
+                        android:layout_alignParentRight="false"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/p11_lblfechaproceso"
+                        android:background="?android:attr/actionModeSplitBackground"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/red"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/p11_lblvencimiento"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/p11_lblfechaproceso"
+                        android:layout_marginTop="5dp"
+                        android:background="?android:attr/actionModeSplitBackground"
+                        android:gravity="center_vertical"
+                        android:text="FECHA VENCIMIENTO"
+                        android:textColor="@color/blue"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/p11_lblfechavencimientonombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/p11_lblfechaproceso"
+                        android:layout_alignParentRight="false"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/p11_lblvencimiento"
+                        android:background="?android:attr/actionModeSplitBackground"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/zebra_blue"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/p11_pnlPesoTotal"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/p11_lblfechavencimientonombre"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="false"
+                        android:layout_marginTop="5dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/p11_lblTituloPesoTotal"
+                            android:layout_width="match_parent"
+                            android:layout_height="28dp"
+                            android:background="?android:attr/actionModeSplitBackground"
+                            android:gravity="center_vertical"
+                            android:text="PESO TOTAL"
+                            android:textColor="@color/blue"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/p11_lblPesoTotal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/p11_lblfechasacrificio"
+                            android:layout_alignParentRight="false"
+                            android:layout_marginLeft="-1dp"
+                            android:layout_marginTop="-10dp"
+                            android:layout_marginRight="-1dp"
+                            android:layout_toRightOf="@+id/p11_lblfechaproceso"
+                            android:background="@android:drawable/editbox_background"
+                            android:elevation="0dp"
+                            android:text="265.35"
+                            android:textAlignment="center"
+                            android:textColor="@color/red"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/p11_pnlCajaTotal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/p11_lblfechavencimientonombre"
+                        android:layout_alignParentLeft="false"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/p11_pnlPesoTotal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/p11_lblTituloNoCajas"
+                            android:layout_width="match_parent"
+                            android:layout_height="28dp"
+                            android:background="?android:attr/actionModeSplitBackground"
+                            android:gravity="center_vertical"
+                            android:text="# PIEZAS"
+                            android:textColor="@color/blue"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/p11_lblCantCajas"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/p11_lblfechasacrificio"
+                            android:layout_alignParentRight="false"
+                            android:layout_marginLeft="-1dp"
+                            android:layout_marginTop="-10dp"
+                            android:layout_marginRight="-1dp"
+                            android:layout_toRightOf="@+id/p11_lblfechaproceso"
+                            android:background="@android:drawable/editbox_background"
+                            android:text="2"
+                            android:textAlignment="center"
+                            android:textColor="@color/red"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+        </ScrollView>
+
+</RelativeLayout>

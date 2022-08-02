@@ -1,0 +1,234 @@
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ItemMenu"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/optorden"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/button_icon_size"
+                android:layout_height="@dimen/button_icon_size"
+                android:layout_marginLeft="@dimen/button_icon_margin"
+                android:layout_marginTop="@dimen/button_icon_margin"
+                android:layout_marginBottom="@dimen/button_icon_margin"
+                android:src="@drawable/ic_action_workorden"
+                app:srcCompat="@drawable/ic_action_workorden" />
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/button_icon_margin"
+                android:layout_weight="1.0"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/item_orden"
+                android:textColor="@color/zebra_blue"
+                android:textSize="18.0sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="@dimen/button_icon_size"
+                android:layout_height="@dimen/button_icon_size"
+                android:layout_margin="@dimen/button_icon_margin"
+                android:src="@drawable/icon_item" />
+
+
+        </LinearLayout>
+
+        <View style="@style/Divider_Horizontal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/optsincronizar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/button_icon_size"
+                android:layout_height="@dimen/button_icon_size"
+                android:layout_marginLeft="@dimen/button_icon_margin"
+                android:layout_marginTop="@dimen/button_icon_margin"
+                android:layout_marginBottom="@dimen/button_icon_margin"
+                android:src="@drawable/ic_action_actualizar"
+                app:srcCompat="@drawable/ic_action_actualizar" />
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/button_icon_margin"
+                android:layout_weight="1.0"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/item_sincronizar"
+                android:textColor="@color/zebra_blue"
+                android:textSize="18.0sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="@dimen/button_icon_size"
+                android:layout_height="@dimen/button_icon_size"
+                android:layout_margin="@dimen/button_icon_margin"
+                android:src="@drawable/icon_item" />
+
+
+        </LinearLayout>
+
+        <View style="@style/Divider_Horizontal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/optreportes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/button_icon_size"
+                android:layout_height="@dimen/button_icon_size"
+                android:layout_marginLeft="@dimen/button_icon_margin"
+                android:layout_marginTop="@dimen/button_icon_margin"
+                android:layout_marginBottom="@dimen/button_icon_margin"
+                android:src="@drawable/ic_action_reporte"
+                app:srcCompat="@drawable/ic_action_reporte"
+                tools:ignore="ImageContrastCheck" />
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/button_icon_margin"
+                android:layout_weight="1.0"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/item_reporte"
+                android:textColor="@color/zebra_blue"
+                android:textSize="18.0sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="@dimen/button_icon_size"
+                android:layout_height="@dimen/button_icon_size"
+                android:layout_margin="@dimen/button_icon_margin"
+                android:src="@drawable/icon_item" />
+
+
+        </LinearLayout>
+
+        <View style="@style/Divider_Horizontal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/optusuario"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/button_icon_size"
+                android:layout_height="@dimen/button_icon_size"
+                android:layout_marginLeft="@dimen/button_icon_margin"
+                android:layout_marginTop="@dimen/button_icon_margin"
+                android:layout_marginBottom="@dimen/button_icon_margin"
+                android:src="@drawable/ic_action_usuario"
+                app:srcCompat="@drawable/ic_action_usuario" />
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/button_icon_margin"
+                android:layout_weight="1.0"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/item_usuario"
+                android:textColor="@color/zebra_blue"
+                android:textSize="18.0sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="@dimen/button_icon_size"
+                android:layout_height="@dimen/button_icon_size"
+                android:layout_margin="@dimen/button_icon_margin"
+                android:src="@drawable/icon_item" />
+
+
+        </LinearLayout>
+
+        <View style="@style/Divider_Horizontal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/optdts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/button_icon_size"
+                android:layout_height="@dimen/button_icon_size"
+                android:layout_marginLeft="@dimen/button_icon_margin"
+                android:layout_marginTop="@dimen/button_icon_margin"
+                android:layout_marginBottom="@dimen/button_icon_margin"
+                android:src="@drawable/ic_action_sgbd"
+                app:srcCompat="@drawable/ic_action_sgbd" />
+
+            <TextView
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/button_icon_margin"
+                android:layout_weight="1.0"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/item_sgbd"
+                android:textColor="@color/zebra_blue"
+                android:textSize="18.0sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="@dimen/button_icon_size"
+                android:layout_height="@dimen/button_icon_size"
+                android:layout_margin="@dimen/button_icon_margin"
+                android:src="@drawable/icon_item" />
+
+        </LinearLayout>
+
+        <View style="@style/Divider_Horizontal" />
+    </LinearLayout>
+
+</LinearLayout>

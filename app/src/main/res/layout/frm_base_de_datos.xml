@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".FrmBaseDeDatos">
+    <!--  android:background="@color/md_theme_light_primaryContainer"-->
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/md_theme_light_primary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        >
+             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                 app:navigationIcon="?attr/homeAsUpIndicator"
+                app:title="@string/frmBD">
+            </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:id="@+id/p03_lblubicacionbd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:drawable/editbox_background"
+        android:gravity="center"
+        android:textSize="12sp" />
+
+    <Spinner
+        android:id="@+id/p03_Cbxtabla"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="-10dp"
+        android:background="@android:drawable/editbox_background" />
+
+    <com.evrencoskun.tableview.TableView
+        android:id="@+id/tblmostrarRegistros"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@android:drawable/editbox_background"
+        app:selected_color="@color/table_view_default_selected_background_color"
+        app:shadow_color="@color/table_view_default_selected_background_color"></com.evrencoskun.tableview.TableView>
+</LinearLayout>
