@@ -31,9 +31,9 @@
     <string name="p03_mnu_borrar">Borrar</string>
 
     <!--FORMULARIO PRINCIPAL-->
-    <string name="item_orden">PEDIDOS</string>
+    <string name="item_orden">PREPARAR PEDIDOS</string>
     <string name="item_sincronizar">SINCRONIZAR</string>
-    <string name="item_reporte">REPORTES</string>
+    <string name="item_libre">ESCANEO LIBRE</string>
     <string name="item_usuario">USUARIO</string>
     <string name="item_sgbd">BASE DE DATOS</string>
     <string name="buscar_usuario">Buscar por nombre de usuario</string>
@@ -73,6 +73,19 @@
     <string name="i04_menu_actualizar">ACTUALIZAR DESDE EL SERVIDOR</string>
     <string name="i04_menu_detalle">VER DETALLE ADICIONALES</string>
 
+    <!--FORMULARIO CONTENEDOR-->
+    <string name="i06_lblcontenedor"># DOCUMENTO</string>
+    <string name="i06_lblFechacreacion">FECHA CREACION</string>
+    <string name="i06_lblFechainicio">FECHA INICIO</string>
+    <string name="i06_lblFechafin">FECHA FIN</string>
+    <string name="i06_lblEstado">ESTADO</string>
+
+
+    <string name="i06_menu_contenedor">TRABAJAR DOCUMENTO</string>
+    <string name="i06_menu_aperturar">REAPERTURAR </string>
+    <string name="i06_menu_reset">REINICIAR </string>
+    <string name="i06_menu_renombrar">RENOMBRAR</string>
+    <string name="i06_menu_eliminar">ELIMINAR</string>
 
     <!--FORMULARIO LECTURA POR PEDIDO-->
     <string name="p11_txtCodigoBarra">Buscar codigo</string>

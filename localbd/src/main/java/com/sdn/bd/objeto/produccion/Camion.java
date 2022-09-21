@@ -5,6 +5,8 @@ package com.sdn.bd.objeto.produccion;
 //WHERE (Valor = 1)
 //ORDER BY NOPLACA
 
+import android.util.Log;
+
 public class Camion {
     Integer id=null;
     String noplaca="";
@@ -66,5 +68,9 @@ public class Camion {
                 ", min=" + min +
                 ", max=" + max +
                 '}';
+    }
+
+    public void printLog(String classname) {
+        Log.i(classname,"Camion seleccionado: "+ toString2());
     }
 }

@@ -35,7 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.sdn.bd.dao.TblOperador;
+import com.sdn.bd.dao.host.TblOperador;
 import com.sdn.bd.objeto.host.Operador;
 import com.sdn.cacique.bdremote.BDOperacion_Update;
 import com.sdn.cacique.util.ConfApp;
@@ -101,6 +101,15 @@ public class FrmPrincipal extends AppCompatActivity {
             }
         });
 
+        ((LinearLayout) dialogView.findViewById(R.id.optlibre)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mantenerBusqueda = false;
+                Intent nuevaPantalla = new Intent(FrmPrincipal.this, FrmContenedor.class);
+                startActivity(nuevaPantalla);
+            }
+        });
+
         ((LinearLayout) dialogView.findViewById(R.id.optsincronizar)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,7 +141,7 @@ public class FrmPrincipal extends AppCompatActivity {
 
         if(!ConfApp.USER_SUPERVISOR){
             RemoverVista(dialogView,R.id.optsincronizar);
-            RemoverVista(dialogView,R.id.optreportes);
+            RemoverVista(dialogView,R.id.optlibre);
             RemoverVista(dialogView,R.id.optusuario);
         }
     }

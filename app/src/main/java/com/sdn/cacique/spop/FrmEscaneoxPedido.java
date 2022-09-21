@@ -73,7 +73,7 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
     private static final String LOG_TAG = FrmEscaneoxPedido.class.getSimpleName();
 
     private TextView txtLectura, txtcodigo, txtdescripcion, txtcaja, txtpeso, txtlote, txtserie, txtfechasacrificio, txtfechaproceso, txtfechavencimiento, txtpesototal, txtcantidadcajas;
-    private TextView lblBodegaNombre,txtCamion,txtConductor,txtMarchamo;
+    private TextView lblBodegaNombre, txtCamion, txtConductor, txtMarchamo;
 
     FrmEcaneoxPedidoAdapter2 adaptador;
     ViewPager2 viewPager;
@@ -128,14 +128,14 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
                                                 Thread thread = new Thread(new Runnable() {
                                                     @Override
                                                     public void run() {
-                                                        try  {
-                                                            if(!codigoAEliminar.isEmpty()){
-                                                                Lectura lectura_borrar = TblLectura.obtenerRegistroXCodigoBarra(FrmEscaneoxPedido.this,codigoAEliminar);
-                                                                Producto pr = TblProducto.obtenerRegistroxCodigo(FrmEscaneoxPedido.this,lectura_borrar.getCodigo());
+                                                        try {
+                                                            if (!codigoAEliminar.isEmpty()) {
+                                                                Lectura lectura_borrar = TblLectura.obtenerRegistroXCodigoBarra(FrmEscaneoxPedido.this, codigoAEliminar);
+                                                                Producto pr = TblProducto.obtenerRegistroxCodigo(FrmEscaneoxPedido.this, lectura_borrar.getCodigo());
 
-                                                                if(ConfApp.BDOPERATION.borrar_Caja(lectura_borrar.getBarra())){
-                                                                    ConfApp.BDOPERATION.actualizar_existencia(pr.getCodigo_softland(),ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getBodega().getId(),lectura_borrar.getPeso());
-                                                                    TblLectura.borrarCaja(FrmEscaneoxPedido.this, codigoAEliminar, true);
+                                                                if (ConfApp.BDOPERATION.borrar_Caja(lectura_borrar.getBarra())) {
+                                                                    ConfApp.BDOPERATION.actualizar_existencia(pr.getCodigo_softland(), ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getBodega().getId(), lectura_borrar.getPeso());
+                                                                    TblLectura.borrarCaja(FrmEscaneoxPedido.this, codigoAEliminar);
                                                                 }
                                                             }
 
@@ -148,7 +148,6 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
                                                                     preparePnlDetalle(pnldetalle.getView());
                                                                 }
                                                             });
-
 
 
                                                         } catch (Exception e) {
@@ -183,7 +182,7 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
                     .setPositiveButton("SI",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                   new AsyncTaskRunnerElimiarLecturas(FrmEscaneoxPedido.this, ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getId()).execute("Borrando cajas", "Preparando datos");
+                                    new AsyncTaskRunnerElimiarLecturas(FrmEscaneoxPedido.this, ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getId()).execute("Borrando cajas", "Preparando datos");
                                 }
                             });
             AlertDialog alert = builder.create();
@@ -301,21 +300,21 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
        /* runOnUiThread(new Runnable() {
             @Override
             public void run() {*/
-                toolbar.getMenu().findItem(R.id.p11_item_borrar).setVisible(false);
-                toolbar.getMenu().findItem(R.id.p11_item_borrartodo).setVisible(false);
+        toolbar.getMenu().findItem(R.id.p11_item_borrar).setVisible(false);
+        toolbar.getMenu().findItem(R.id.p11_item_borrartodo).setVisible(false);
 
-                ArrayList<Lectura> detalle = TblLectura.obtenerRegistrosXOrden(FrmEscaneoxPedido.this,ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getId());
+        ArrayList<Lectura> detalle = TblLectura.obtenerRegistrosXOrden(FrmEscaneoxPedido.this, ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getId());
 
-                switch (position){
-                    case 0://lectura
-                        break;
-                    case 1://resumen
-                        break;
-                    case 2://detalle
-                        toolbar.getMenu().findItem(R.id.p11_item_borrar).setVisible(detalle.size() > 0);
-                        toolbar.getMenu().findItem(R.id.p11_item_borrartodo).setVisible(detalle.size()> 1);
-                        break;
-                }
+        switch (position) {
+            case 0://lectura
+                break;
+            case 1://resumen
+                break;
+            case 2://detalle
+                toolbar.getMenu().findItem(R.id.p11_item_borrar).setVisible(detalle.size() > 0);
+                toolbar.getMenu().findItem(R.id.p11_item_borrartodo).setVisible(detalle.size() > 1);
+                break;
+        }
            /* }
         });*/
     }
@@ -375,7 +374,7 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
                         if ((codigo.length() == 50 || codigo.length() == 21) && !estaLeyendo && Utils.esCodigoValido(codigo)) {
                             estaLeyendo = true;
                             txtLectura.setEnabled(false);
-                            if (!ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getAtentido())
+                            if (ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getAtentido())
                                 continuar_Comprobacion(codigo);
                             else {
                                 mostrarFormularioMensaje("ORDEN NO DISPONIBLE", "LA ORDEN <font color='#FF7F27'>" + ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getId() + "</font> DEL CLIENTE: " + ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getCliente() + ", NO SE PUEDE MODIFICAR", sound.msg_error, R.color.red, true);
@@ -398,6 +397,7 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
     }
 
     String temp;
+
     private void continuar_Comprobacion(final String codigo_barra) {
         String idproducto = ConfApp.CODIGO_BARRA[3].toString();
         Date fecha = (Date) ConfApp.CODIGO_BARRA[5];
@@ -405,7 +405,7 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
         Integer nopiezas = (Integer) ConfApp.CODIGO_BARRA[8];
         String sublote = ConfApp.CODIGO_BARRA[9].toString();
         String serie = ConfApp.CODIGO_BARRA[11].toString();
-        boolean isProductoAcutorizo=false;
+        boolean isProductoAcutorizo = false;
 
         temp = "El PRODUCTO" +
                 "<BR><font color='#CB3234'>CODIGO:</font> " + idproducto +
@@ -420,7 +420,7 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
 
 
         if (obj_producto != null) {
-            Log.i(LOG_TAG, "BuscarProuducto"+ obj_producto.toString());
+            Log.i(LOG_TAG, "BuscarProuducto" + obj_producto.toString());
 
             isProductoAcutorizo = TblPedido_Detalle.esProductoValido(FrmEscaneoxPedido.this, ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getId(), obj_producto.getCodigo_softland());
 
@@ -428,11 +428,11 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        try  {
+                        try {
                             double existencia = ConfApp.BDOPERATION.Get_Existecia(obj_producto.getCodigo_softland(), ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getBodega().getId());
 
-                            if (existencia >=peso) {
-                                mostrarCodigoDescompuesto(idproducto, obj_producto.getNombre(),codigo_barra,"" + String.format("%,.2f", peso),sublote,serie,Utils.bd.C_DateToAppFormat(fecha));
+                            if (existencia >= peso) {
+                                mostrarCodigoDescompuesto(idproducto, obj_producto.getNombre(), codigo_barra, "" + String.format("%,.2f", peso), sublote, serie, Utils.bd.C_DateToAppFormat(fecha));
 
                                 if (ConfApp.USER_DTS) {
                                     obj_lectura = new Lectura();
@@ -452,12 +452,12 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
                                     if (!TblLectura.cajaEstaRegistrada(FrmEscaneoxPedido.this, codigo_barra)) {         //NO ESTA REGISTRADA LA CAJA LOCALMENTE
                                         if (!ConfApp.BDOPERATION.cajaEstaRegistrada(codigo_barra)) {                            //NO ESTA REGISTRADA LA CAJA EN EL SERVIDOR
                                             if (puedoagregarCajaAlaOrden(peso, idproducto)) {                                   //VALIDO SI EL PRODUCTO ESCANEADO FUE SOLICITADO EN LA ORDEN
-                                                if (puedoAgregarCajaAlCamion( ConfApp.ORDEN_TRABAJADA_ACTUALMENTE,peso)) {      //DEVUELVE TRUE SI HAY ESPACIO EN EL CAMION PARA AGREGAR LA CAJA
+                                                if (puedoAgregarCajaAlCamion(ConfApp.ORDEN_TRABAJADA_ACTUALMENTE, peso)) {      //DEVUELVE TRUE SI HAY ESPACIO EN EL CAMION PARA AGREGAR LA CAJA
 
-                                                    Integer IDGENERADO = ConfApp.BDOPERATION.guardar_Caja(ConfApp.ORDEN_TRABAJADA_ACTUALMENTE, obj_lectura,ConfApp.OPERADORLOGEADO, ConfApp.UUID_FROM_DEVICE);
+                                                    Integer IDGENERADO = ConfApp.BDOPERATION.guardar_Caja(ConfApp.ORDEN_TRABAJADA_ACTUALMENTE, obj_lectura, ConfApp.OPERADORLOGEADO, ConfApp.UUID_FROM_DEVICE);
                                                     obj_lectura.setIdservidor(IDGENERADO);
 
-                                                    if(IDGENERADO>0 && ConfApp.BDOPERATION.actualizar_existencia(obj_producto.getCodigo_softland(),ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getBodega().getId(), obj_lectura.getPeso()*-1)){
+                                                    if (IDGENERADO > 0 && ConfApp.BDOPERATION.actualizar_existencia(obj_producto.getCodigo_softland(), ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getBodega().getId(), obj_lectura.getPeso() * -1)) {
                                                         if (TblLectura.guardar(FrmEscaneoxPedido.this, obj_lectura)) {
                                                             mostrarPantallaVerde();
 
@@ -465,6 +465,7 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
                                                                 ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.setFecha_inicio(new Date(System.currentTimeMillis()));
                                                                 ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.setOperador(ConfApp.OPERADORLOGEADO);
                                                                 TblPedido.modificar(FrmEscaneoxPedido.this, ConfApp.ORDEN_TRABAJADA_ACTUALMENTE);
+                                                                ConfApp.BDOPERATION.guardar_orden(ConfApp.ORDEN_TRABAJADA_ACTUALMENTE);
                                                             }
                                                         } else {//ERROR AL GUARDAR
                                                             mostrarFormularioMensaje("ERROR AL GUARDAR", "NO SE PUDO GUARDAR LA LECTURA", sound.msg_error, R.color.red, true);
@@ -476,7 +477,7 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
                                             } else {//DETALLE DE PRODUCTO COMPLETO
                                                 mostrarFormularioMensaje("PESO EXCEDIDO", "EL PRODUCTO " + obj_producto.getNombre() + ", EXCEDE EL PESO PERMITIDO PARA LA ORDEN", sound.msg_error, R.color.red, true);
                                             }
-                                        }else {//DETALLE DE PRODUCTO COMPLETO
+                                        } else {//DETALLE DE PRODUCTO COMPLETO
                                             mostrarFormularioMensaje("CAJA REGISTRADA", "CAJA " + codigo_barra + ",<BR>YA FUE REGISTRADA POR OTRO OPERARIO", sound.msg_error, R.color.red, true);
                                         }
                                     } else {
@@ -537,19 +538,19 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
 
     private boolean puedoAgregarCajaAlCamion(Pedido orden, Double PesoDeLaCaja) {
         Camion c = TblCamion.obtenerRegistro(FrmEscaneoxPedido.this, orden.getCamion().getId());
-        double PesoMaximoDeProducto= ConfApp.BDOPERATION.Get_PesoCamion(c);
+        double PesoMaximoDeProducto = ConfApp.BDOPERATION.Get_PesoCamion(c);
         return (PesoMaximoDeProducto + PesoDeLaCaja) <= c.getMax();
     }
 
     private boolean puedoagregarCajaAlaOrden(Double PESO_NUEVACAJA, String CODIGO_PRODUCTO) {
         TableViewModel t = new TableViewModel(FrmEscaneoxPedido.this, getSQLQUERY() + " WHERE T.CODIGO='" + CODIGO_PRODUCTO + "'");
-        double PESO_SOLICITADO = 0.0, PESO_ESCANEADO = 0.0,PESO_TOTAL = 0.0;
+        double PESO_SOLICITADO = 0.0, PESO_ESCANEADO = 0.0, PESO_TOTAL = 0.0;
 
         PESO_SOLICITADO = Double.parseDouble(t.getCellList().get(0).get(2).getData().toString());
         PESO_ESCANEADO = Double.parseDouble(t.getCellList().get(0).get(3).getData().toString()); // PESO ESCANEADO
 
         PESO_TOTAL = PESO_ESCANEADO + PESO_NUEVACAJA;
-        return PESO_TOTAL<=PESO_SOLICITADO;
+        return PESO_TOTAL <= PESO_SOLICITADO;
     }
 
     private void mostrarCodigoDescompuesto(String idproducto, String nombre, String codigo_barra, String peso, String sublote, String serie, String fecha) {
@@ -566,7 +567,6 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
             }
         });
     }
-
 
 
     //cambiarpor showMessageBox
@@ -663,9 +663,9 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
     /****************************************  PANEL RESUMEN   *****************************************************/
     private void preparePnlResumen(View view) {
         lblBodegaNombre = findViewById(R.id.p11_lblBodeganombre);
-        lblBodegaNombre.setText(ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getBodega().getId()+"-"+ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getBodega().getNombre());
+        lblBodegaNombre.setText(ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getBodega().getId() + "-" + ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getBodega().getNombre());
 
-        txtCamion= findViewById(R.id.p11_lblCamionnombre);
+        txtCamion = findViewById(R.id.p11_lblCamionnombre);
         txtCamion.setText("" + ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getCamion().getNoplaca());
         txtCamion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -697,12 +697,12 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-               // if (!ConfApp.USER_ESTIBADOR) return;
+                // if (!ConfApp.USER_ESTIBADOR) return;
 
-                if(ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getMarchamo().isEmpty()){
-                    mostrarFormularioMensaje("DATOS INCOMPLETO","Favor ingresar el marchamo para cerrar la orden",sound.msg_error,R.color.red,true);
+                if (ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getMarchamo().isEmpty()) {
+                    mostrarFormularioMensaje("DATOS INCOMPLETO", "Favor ingresar el marchamo para cerrar la orden", sound.msg_error, R.color.red, true);
                     txtMarchamo.requestFocus();
-                    return ;
+                    return;
                 }
 
                 Object[] respuesta = estaCompletoDetalleOrden();
@@ -722,7 +722,7 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
                 }
 
                 builder.setTitle(Boolean.valueOf(respuesta[0].toString()) ? "ORDEN COMPLETADA" : "ORDEN INCOMPLETA");
-                builder.setMessage(Boolean.valueOf(respuesta[0].toString()) ? Html.fromHtml("Desea cerrar la Orden <font color='#FF7F27'>" + ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getId()+ "</font>" ): Html.fromHtml(respuesta[1].toString()));
+                builder.setMessage(Boolean.valueOf(respuesta[0].toString()) ? Html.fromHtml("Desea cerrar la Orden <font color='#FF7F27'>" + ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getId() + "</font>") : Html.fromHtml(respuesta[1].toString()));
 
                 builder.setIcon(R.drawable.img_logo);
                 builder.setPositiveButton("SI",
@@ -745,7 +745,7 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
             }
         });
 
-        Log.i(LOG_TAG, "preparePnlResumen Querey:"+getSQLQUERY());
+        Log.i(LOG_TAG, "preparePnlResumen Querey:" + getSQLQUERY());
 
         TblVisorConsolidado = findViewById(R.id.p11_tblconsolidado);
         TblModelConsolidado = new TableViewModel(FrmEscaneoxPedido.this, getSQLQUERY());
@@ -829,11 +829,33 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
-                Camion item = (Camion) arg0.getItemAtPosition(position);
-                //comprobar si se puede pasar todo el detalle a esa orden.
-                obj_pedido.setCamion(item);
-                TblPedido.modificar(FrmEscaneoxPedido.this, obj_pedido);
-                txtCamion.setText( obj_pedido.getCamion().getNoplaca());
+                Camion temp = obj_pedido.getCamion();
+                obj_pedido.setCamion((Camion) arg0.getItemAtPosition(position));
+
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            if (ConfApp.BDOPERATION.guardar_orden(obj_pedido)) {
+                                if (!TblPedido.modificar(FrmEscaneoxPedido.this, obj_pedido))
+                                    obj_pedido.setCamion(temp);
+                            } else {
+                                obj_pedido.setCamion(temp);
+                                Toast.makeText(FrmEscaneoxPedido.this, "No se pudo actualizar el Camion", Toast.LENGTH_SHORT).show();
+                            }
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    txtCamion.setText(obj_pedido.getCamion().getNoplaca());
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                thread.start();
                 FrmSeleccionarCamion.dismiss();
             }
         });
@@ -908,16 +930,40 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
-                Conductor item = (Conductor) arg0.getItemAtPosition(position);
-                obj_pedido.setConductor(item);
-                TblPedido.modificar(FrmEscaneoxPedido.this, obj_pedido);
-                txtConductor.setText(obj_pedido.getConductor().getNombre());
+                Conductor temp = obj_pedido.getConductor();
+                obj_pedido.setConductor((Conductor) arg0.getItemAtPosition(position));
+
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            if (ConfApp.BDOPERATION.guardar_orden(obj_pedido)) {
+                                if (!TblPedido.modificar(FrmEscaneoxPedido.this, obj_pedido))
+                                    obj_pedido.setConductor(temp);
+                            } else {
+                                obj_pedido.setConductor(temp);
+                                Toast.makeText(FrmEscaneoxPedido.this, "No se pudo actualizar el marchamo", Toast.LENGTH_SHORT).show();
+                            }
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    txtConductor.setText(obj_pedido.getConductor().getNombre());
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                thread.start();
+
                 FrmSeleccionarConductor.dismiss();
             }
         });
     }
 
-    private void mostrarPopupSeleccionarMarchamo(Pedido obj_pedido){
+    private void mostrarPopupSeleccionarMarchamo(Pedido obj_pedido) {
         AlertDialog.Builder componente = new AlertDialog.Builder(FrmEscaneoxPedido.this);
         componente.setTitle("Ingrese el # de marchamo");
         componente.setCancelable(false);
@@ -932,9 +978,34 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
         componente.setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                String temp = obj_pedido.getMarchamo();
                 obj_pedido.setMarchamo(input.getText().toString());
-                TblPedido.modificar(FrmEscaneoxPedido.this,obj_pedido);
-                txtMarchamo.setText(obj_pedido.getMarchamo());
+
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            if (ConfApp.BDOPERATION.guardar_orden(obj_pedido)) {
+                                if (!TblPedido.modificar(FrmEscaneoxPedido.this, obj_pedido))
+                                    obj_pedido.setMarchamo(temp);
+                            } else {
+                                obj_pedido.setMarchamo(temp);
+                                //Toast.makeText(FrmEscaneoxPedido.this, "No se pudo actualizar el marchamo", Toast.LENGTH_SHORT).show();
+                            }
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    txtMarchamo.setText(obj_pedido.getMarchamo());
+                                }
+                            });
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                thread.start();
             }
         });
 
@@ -949,21 +1020,20 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
     }
 
     /**
-     *
      * @return Object[]
-     *
+     * <p>
      * Object[0] = Boolean              Resultado de la comprobacion.
      * Object[1] = String               Mensaje para el objeto Alert.
      * Object[]  = TableViewModel       Lista de item que no cumplieron los limites.
      */
     private Object[] estaCompletoDetalleOrden() {
-        double PESO_SOLICITADO = 0.0, PESO_ESCANEADO = 0.0, PESO_LIMITE = 0.0,PESO_LIMITE_INFERIOR = 0.0,PESO_LIMITE_SUPERIOR = 0.0;
+        double PESO_SOLICITADO = 0.0, PESO_ESCANEADO = 0.0, PESO_LIMITE = 0.0, PESO_LIMITE_INFERIOR = 0.0, PESO_LIMITE_SUPERIOR = 0.0;
         ArrayList<ArrayList> Filas = new ArrayList<>();
         Object[] objeto = new Object[3];
         boolean respuesta = true;
 
         StringBuilder Mensaje = new StringBuilder();
-        Mensaje.append("Desea cerrar la Orden <font color='#FF7F27'>" + ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getId()+ "</font>");
+        Mensaje.append("Desea cerrar la Orden <font color='#FF7F27'>" + ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getId() + "</font>");
         Mensaje.append("<BR>Aunque se encuenten pendiente de completar los siguiente producto:");
         TableViewModel t = new TableViewModel(FrmEscaneoxPedido.this, getSQLQUERY());
 
@@ -974,13 +1044,13 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
             PESO_SOLICITADO = Double.parseDouble(t.getCellList().get(it).get(2).getData().toString());
             PESO_ESCANEADO = Double.parseDouble(t.getCellList().get(it).get(3).getData().toString());
 
-            PESO_LIMITE_INFERIOR =PESO_SOLICITADO - ConfApp.LIMIT_WEIGHT;
+            PESO_LIMITE_INFERIOR = PESO_SOLICITADO - ConfApp.LIMIT_WEIGHT;
             PESO_LIMITE_SUPERIOR = PESO_SOLICITADO + ConfApp.LIMIT_WEIGHT;
 
-            if(PESO_ESCANEADO>=PESO_LIMITE_INFERIOR && PESO_ESCANEADO<=PESO_LIMITE_SUPERIOR){
+            if (PESO_ESCANEADO >= PESO_LIMITE_INFERIOR && PESO_ESCANEADO <= PESO_LIMITE_SUPERIOR) {
                 respuesta = respuesta && true;
-            }else{
-                String UM =  (PESO_ESCANEADO < PESO_LIMITE_INFERIOR) ? "-" +String.format("%,.2f", (PESO_SOLICITADO - PESO_ESCANEADO)) : "+" +String.format("%,.2f", (PESO_LIMITE_SUPERIOR - PESO_ESCANEADO)) ;
+            } else {
+                String UM = (PESO_ESCANEADO < PESO_LIMITE_INFERIOR) ? "-" + String.format("%,.2f", (PESO_SOLICITADO - PESO_ESCANEADO)) : "+" + String.format("%,.2f", (PESO_LIMITE_SUPERIOR - PESO_ESCANEADO));
                 Modelo_datos.addRow(new ArrayList<>(Arrays.asList(t.getCellList().get(it).get(0).getData().toString(), t.getCellList().get(it).get(1).getData().toString(), UM)));
 
                 respuesta = respuesta && false;
@@ -996,41 +1066,56 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
 
     private void ActioncerrarOrden() {
         ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.setFecha_fin(new Date(System.currentTimeMillis()));
-        ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.setAtentido(true);
+        //ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.setAtentido(true);
 
-        if (TblPedido.modificar(FrmEscaneoxPedido.this, ConfApp.ORDEN_TRABAJADA_ACTUALMENTE)) {
-            mostrarFormularioMensaje("Cierre de Orden","Se ha cerrado la orden "+ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getId(),sound.msg_ok, R.color.green, true);
-        } else {
-            Toast.makeText(FrmEscaneoxPedido.this, "No se modifico", Toast.LENGTH_SHORT);
-        }
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try  {
+                    if(ConfApp.BDOPERATION.guardar_orden(ConfApp.ORDEN_TRABAJADA_ACTUALMENTE)){
+                        if (TblPedido.modificar(FrmEscaneoxPedido.this, ConfApp.ORDEN_TRABAJADA_ACTUALMENTE)) {
+                            mostrarFormularioMensaje("Cierre de Orden", "Se ha cerrado la orden " + ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getId(), sound.msg_ok, R.color.green, true);
+                        } else {
+                            Toast.makeText(FrmEscaneoxPedido.this, "No se modifico", Toast.LENGTH_SHORT);
+                        }
 
-        if (ConfApp.USER_ESTIBADOR) {
-            findViewById(R.id.p11_btnFinalizar).setVisibility(ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getFecha_fin() != null ? View.INVISIBLE : View.VISIBLE);
-        } else {
-            findViewById(R.id.p11_btnFinalizar).setVisibility(View.INVISIBLE);
-        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (ConfApp.USER_ESTIBADOR ) {
+                                    findViewById(R.id.p11_btnFinalizar).setVisibility(ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getFecha_fin() != null ? View.INVISIBLE : View.VISIBLE);
+                                } else {
+                                    findViewById(R.id.p11_btnFinalizar).setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        });
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
     }
 
     /**
-     *
      * @return String retorno un sqlstring en el formato
      * EJEMPLO REGORNO DE GETSQLQUERY()
      * CODIGO       DESCRIPCION,            LIBRS SOLICITADAS   LIBRS LEIDAS        CANT PIEZAS     # CAJAS
      * 50016        RECORTE DE EMBUTIDO         60.00               45.12               10              1
-     *
      */
     public String getSQLQUERY() {
         return "SELECT T.CODIGO,T.DESCRIPCION,printf('%.2f', T.PESO) AS [LBR SOLICITADAS],printf('%.2f', COALESCE(B.PESO,0,B.PESO) )AS [LBS LEIDAS], COALESCE(B.PIEZAS,0,B.PIEZAS) AS [CANT PIEZAS],COALESCE(B.CAJAS,0,B.CAJAS) AS [CAJAS ESCANEADAS]\n" +
                 "                 FROM(\n" +
                 "                           SELECT PR.codigo AS CODIGO,PR.nombre AS DESCRIPCION,SUM(DT.cantidad) AS PESO \n" +
                 "                           FROM soft_pedido_detalle DT LEFT JOIN prod_producto PR ON PR.codigo_softland=DT.idproducto \n" +
-                "                           WHERE DT.idpedido='"+ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getId() +"'\n" +
+                "                           WHERE DT.idpedido='" + ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getId() + "'\n" +
                 "                           GROUP BY DT.idproducto\n" +
                 "                     ) AS T \n" +
                 "                 LEFT JOIN (\n" +
                 "                           SELECT host_lectura.codigo AS CODIGO,count(host_lectura.id) AS CAJAS,sum(host_lectura.piezas) AS PIEZAS,  SUM(host_lectura.peso) AS  PESO  \n" +
                 "                           FROM host_lectura \n" +
-                "                           WHERE host_lectura.idorden='"+ ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getId() +"'\n" +
+                "                           WHERE host_lectura.idorden='" + ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getId() + "'\n" +
                 "                           GROUP BY host_lectura.codigo\n" +
                 "                           ) AS B ON T.CODIGO=B.CODIGO\n";
     }
@@ -1045,12 +1130,12 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
     TextInputLayout LayoutinputSearch;
 
     private void preparePnlDetalle(View view) {
-        String  SQLQUERY = "SELECT LE.codigo AS CODIGO,PRO.nombre AS DESCRIPCION, LE.fecha AS FECHA_HORA,printf(\"%.2f\", LE.peso)  AS PESO , LE.barra AS BARRA,(CASE LE.idservidor WHEN 0  THEN 'NO' ELSE 'SI' END) AS ENVIADO \n" +
+        String SQLQUERY = "SELECT LE.codigo AS CODIGO,PRO.nombre AS DESCRIPCION, LE.fecha AS FECHA_HORA,printf(\"%.2f\", LE.peso)  AS PESO , LE.barra AS BARRA,(CASE LE.idservidor WHEN 0  THEN 'NO' ELSE 'SI' END) AS ENVIADO \n" +
                 "FROM host_lectura LE INNER JOIN prod_producto PRO ON LE.codigo=PRO.codigo \n" +
                 "WHERE LE.idorden='" + ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getId() + "'  \n" +
                 "ORDER BY LE.fecha DESC \n";
 
-        Log.i(LOG_TAG, "preparePnlDetalle Query:"+SQLQUERY);
+        Log.i(LOG_TAG, "preparePnlDetalle Query:" + SQLQUERY);
 
         TblVisorDetalle = findViewById(R.id.p10_tbldetalle);
         LayoutinputSearch = findViewById(R.id.p11_txtLayoutDetalle);
@@ -1111,7 +1196,7 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
                     List<List<Cell>> temp = filteredCellItems;
                     if (temp.size() > 0) {
                         codigoAEliminar = temp.get(0).get(4).getData().toString();
-                        Log.i(LOG_TAG, "preparePnlDetalle CodigoAEliminar:"+codigoAEliminar);
+                        Log.i(LOG_TAG, "preparePnlDetalle CodigoAEliminar:" + codigoAEliminar);
                     } else {
                         codigoAEliminar = "";
                     }
@@ -1160,12 +1245,10 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
             long resultado = -1;
             String[] args = new String[]{"" + idOrden};
 
-
             ArrayList<Lectura> lecturas = TblLectura.obtenerRegistrosXOrden(referencia, idOrden);
 
-
             for (int i = 0; i < lecturas.size(); i++) {
-                Producto producto = TblProducto.obtenerRegistroxCodigo(referencia,lecturas.get(i).getCodigo());
+                Producto producto = TblProducto.obtenerRegistroxCodigo(referencia, lecturas.get(i).getCodigo());
 
                 String temp = "BORRANDO" +
                         "<BR><font color='#CB3234'># REGISTRO:</font> " + (i + 1) +
@@ -1175,9 +1258,9 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
 
                 if (lecturas.get(i).getIdservidor() != 0) {
                     //TblLecturaEliminada.guardar(referencia,new LecturaEliminada(registro.getIdservidor(), registro.getBarra(), idOrden));
-                    if(ConfApp.BDOPERATION.borrar_Caja(lecturas.get(i).getBarra())){
-                        ConfApp.BDOPERATION.actualizar_existencia(producto.getCodigo_softland(),ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getBodega().getId(), obj_lectura.getPeso());
-                        TblLectura.borrarCaja(FrmEscaneoxPedido.this, lecturas.get(i).getBarra(), true);
+                    if (ConfApp.BDOPERATION.borrar_Caja(lecturas.get(i).getBarra())) {
+                        ConfApp.BDOPERATION.actualizar_existencia(producto.getCodigo_softland(), ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getBodega().getId(), obj_lectura.getPeso());
+                        TblLectura.borrarCaja(FrmEscaneoxPedido.this, lecturas.get(i).getBarra());
                     }
                 }
 

@@ -1,16 +1,14 @@
 package com.sdn.cacique.bdremote;
 
 import android.util.Log;
-import android.widget.Toast;
 
-import com.sdn.bd.dao.TblOperador;
-import com.sdn.bd.dao.TblParametro;
+import com.sdn.bd.dao.host.TblOperador;
+import com.sdn.bd.dao.host.TblParametro;
 import com.sdn.bd.dao.produccion.TblCamion;
 import com.sdn.bd.dao.produccion.TblProducto;
 import com.sdn.bd.dao.softland.TblBodega;
 import com.sdn.bd.dao.softland.TblConductor;
 import com.sdn.bd.dao.softland.TblPedido;
-import com.sdn.bd.objeto.host.Lectura;
 import com.sdn.bd.objeto.host.Operador;
 import com.sdn.bd.objeto.produccion.Camion;
 import com.sdn.bd.objeto.produccion.Producto;
@@ -31,7 +29,6 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 

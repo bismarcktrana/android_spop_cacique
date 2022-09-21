@@ -1,12 +1,5 @@
 package com.sdn.cacique.util;
 
-import android.content.Context;
-import android.widget.TabHost;
-
-import com.sdn.bd.dao.TblParametro;
-import com.sdn.bd.host.BDUtil;
-
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 

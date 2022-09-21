@@ -3,6 +3,7 @@ package com.sdn.cacique.bdremote;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.sdn.bd.dao.softland.TblPedido;
 import com.sdn.bd.host.BDLocal;
 import com.sdn.bd.objeto.host.Lectura;
 import com.sdn.bd.objeto.host.Operador;
@@ -16,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.sql.Types;
 
 public class BDOperacion  extends SGBD_Interface {
     public String Tipo;
@@ -177,15 +179,15 @@ public class BDOperacion  extends SGBD_Interface {
 
     public boolean actualizar_existencia(String codigo_sofland,String idbodega, double peso) {
         boolean resultado = false;
-        V_SQLQUERYSAVE = "UPDATE [MATCASA].[EXISTENCIA_BODEGA] SET CANT_DISPONIBLE = CANT_DISPONIBLE + ? " +
-                " WHERE ARTICULO=? AND BODEGA=?";
+        V_SQLQUERYEDIT = "UPDATE [MATCASA].[EXISTENCIA_BODEGA] SET CANT_DISPONIBLE = CANT_DISPONIBLE + ? " +
+                        " WHERE ARTICULO=? AND BODEGA=?";
         System.out.println(this.getClass().getName() + " Regisrando cambio - " + codigo_sofland+" "+idbodega+" "+peso);
         try {
 
             V_OBJECTCONECTION = V_SPOOL_ERP.getConnection();
 
             if (V_OBJECTCONECTION != null) {
-                V_PREPAREDSTATEMENT = (PreparedStatement) V_OBJECTCONECTION.prepareStatement(V_SQLQUERYSAVE, Statement.RETURN_GENERATED_KEYS);
+                V_PREPAREDSTATEMENT = (PreparedStatement) V_OBJECTCONECTION.prepareStatement(V_SQLQUERYEDIT, Statement.RETURN_GENERATED_KEYS);
                 V_PREPAREDSTATEMENT.setDouble(1, peso);
                 V_PREPAREDSTATEMENT.setString(2, codigo_sofland);
                 V_PREPAREDSTATEMENT.setString(3, idbodega);
@@ -201,15 +203,15 @@ public class BDOperacion  extends SGBD_Interface {
 
     public boolean borrar_Caja(String codigo_barra) {
         boolean resultado =false;
-        V_SQLQUERY = "DELETE FROM detalle_lectura " +
-                        " WHERE barra=? AND estado=1";
+        V_SQLQUERY ="DELETE FROM detalle_lectura " +
+                    "WHERE barra=? AND estado=1";
         System.out.println(this.getClass().getName() + " Borrando caja" + codigo_barra);
         try {
 
             V_OBJECTCONECTION = V_SPOOL_LICENSE.getConnection();
 
             if (V_OBJECTCONECTION != null) {
-                V_PREPAREDSTATEMENT = (PreparedStatement) V_OBJECTCONECTION.prepareStatement(V_SQLQUERY, Statement.RETURN_GENERATED_KEYS);
+                V_PREPAREDSTATEMENT = (PreparedStatement) V_OBJECTCONECTION.prepareStatement(V_SQLQUERY);
                 V_PREPAREDSTATEMENT.setString(1, codigo_barra);
                resultado =  V_PREPAREDSTATEMENT.executeUpdate()>0;
                 V_PREPAREDSTATEMENT.close();
@@ -221,5 +223,113 @@ public class BDOperacion  extends SGBD_Interface {
         return  resultado;
     }
 
+    public boolean guardar_orden(Pedido obj_orden) {
+        boolean resultado =false;
+        //V_SQLQUERY = "DELETE FROM detalle_lectura  WHERE barra=? AND estado=1";
+        V_SQLQUERYSAVE= "INSERT INTO pedido_detalle(idcamion,idconductor,idoperador,marchamo,atendido,estado,fecha_inicio,fecha_fin,idpedido) " +
+                        " VALUES(?,?,?,?,?,?,?,?,?)";
+
+        V_SQLQUERYEDIT= "UPDATE pedido_detalle SET idcamion=?, idconductor=?,idoperador=?,marchamo=?,atendido=?,estado=?,fecha_inicio=?,fecha_fin=?,idpedido=?" +
+                        " WHERE id=?";;
+
+        try {
+
+            V_OBJECTCONECTION = V_SPOOL_LICENSE.getConnection();
+            if (V_OBJECTCONECTION != null) {
+
+                if(obj_orden.getIdservidor()>0){
+                    Log.i("BDOperacion->Modificar", "guardar_orden"+ obj_orden.toString2());
+                    V_PREPAREDSTATEMENT = (PreparedStatement) V_OBJECTCONECTION.prepareStatement(V_SQLQUERYEDIT);
+                    V_PREPAREDSTATEMENT.setInt(1, obj_orden.getCamion().getId());
+                    V_PREPAREDSTATEMENT.setString(2, obj_orden.getConductor().getId());
+                    V_PREPAREDSTATEMENT.setInt(3, obj_orden.getOperador().getId());
+                    V_PREPAREDSTATEMENT.setString(4, obj_orden.getMarchamo());
+                    V_PREPAREDSTATEMENT.setBoolean(5, obj_orden.getAtentido());
+                    V_PREPAREDSTATEMENT.setInt(6, obj_orden.getEstado());
+                    if(obj_orden.getFecha_inicio()==null){
+                        V_PREPAREDSTATEMENT.setNull(7, Types.DATE);  //pst is prepared statement instance.
+                    }else{
+                        V_PREPAREDSTATEMENT.setDate(7, new Date(obj_orden.getFecha_inicio().getTime()));
+                    }
+
+                    if(obj_orden.getFecha_fin()==null){
+                        V_PREPAREDSTATEMENT.setNull(8, Types.DATE);  //pst is prepared statement instance.
+                    }else{
+                        V_PREPAREDSTATEMENT.setDate(8, new Date(obj_orden.getFecha_fin().getTime()));
+                    }
+                    V_PREPAREDSTATEMENT.setString(9, obj_orden.getId());
+                    V_PREPAREDSTATEMENT.setInt(10, obj_orden.getIdservidor());
+                    resultado = V_PREPAREDSTATEMENT.executeUpdate()>0;
+                    V_PREPAREDSTATEMENT.close();
+                    V_OBJECTCONECTION.close();
+
+                }else{
+                    Log.i("BDOperacion->Guardar", "guardar_orden"+ obj_orden.toString2());
+                    V_PREPAREDSTATEMENT = (PreparedStatement) V_OBJECTCONECTION.prepareStatement(V_SQLQUERYSAVE, Statement.RETURN_GENERATED_KEYS);
+                    V_PREPAREDSTATEMENT.setInt(1, obj_orden.getCamion().getId());
+                    V_PREPAREDSTATEMENT.setString(2, obj_orden.getConductor().getId());
+                    V_PREPAREDSTATEMENT.setInt(3, obj_orden.getOperador().getId());
+                    V_PREPAREDSTATEMENT.setString(4, obj_orden.getMarchamo());
+                    V_PREPAREDSTATEMENT.setBoolean(5, obj_orden.getAtentido());
+                    V_PREPAREDSTATEMENT.setInt(6, obj_orden.getEstado());
+
+                    if(obj_orden.getFecha_inicio()==null){
+                        V_PREPAREDSTATEMENT.setNull(7, Types.DATE);  //pst is prepared statement instance.
+                    }else{
+                        V_PREPAREDSTATEMENT.setDate(7, new Date(obj_orden.getFecha_inicio().getTime()));
+                    }
+
+                    if(obj_orden.getFecha_fin()==null){
+                        V_PREPAREDSTATEMENT.setNull(8, Types.DATE);  //pst is prepared statement instance.
+                    }else{
+                        V_PREPAREDSTATEMENT.setDate(8, new Date(obj_orden.getFecha_fin().getTime()));
+                    }
+
+                    V_PREPAREDSTATEMENT.setString(9, obj_orden.getId());
+                    V_PREPAREDSTATEMENT.execute();
+
+                    V_RESULSET = V_PREPAREDSTATEMENT.getGeneratedKeys();
+                    Integer idGenerado=0;
+                    while (V_RESULSET.next()){
+                        idGenerado =V_RESULSET.getInt(1);//Establecer idGenerdo
+                        resultado = true;
+                    }
+
+                    obj_orden.setIdservidor(idGenerado);
+                    V_RESULSET.close();
+                    V_PREPAREDSTATEMENT.close();
+                    V_OBJECTCONECTION.close();
+
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(this.getClass().getName() + " guardar_orden - SQLException" + e.getMessage());
+        }
+        return resultado;
+    }
+
+    public boolean borrar_pedido(Pedido obj_orden) {
+        boolean resultado =false;
+        V_SQLQUERY ="DELETE FROM pedido_detalle " +
+                "WHERE idpedido=? AND id=?";
+
+        System.out.println(this.getClass().getName() + " Borrando pedido de pedido_detalle");
+
+        try {
+            V_OBJECTCONECTION = V_SPOOL_LICENSE.getConnection();
+
+            if (V_OBJECTCONECTION != null) {
+                V_PREPAREDSTATEMENT = (PreparedStatement) V_OBJECTCONECTION.prepareStatement(V_SQLQUERY);
+                V_PREPAREDSTATEMENT.setString(1, obj_orden.getId());
+                V_PREPAREDSTATEMENT.setInt(2, obj_orden.getIdservidor());
+                resultado =  V_PREPAREDSTATEMENT.executeUpdate()>0;
+                V_PREPAREDSTATEMENT.close();
+                V_OBJECTCONECTION.close();
+            }
+        } catch (SQLException e) {
+            System.out.println(this.getClass().getName() + " borrar_pedido - SQLException" + e.getMessage());
+        }
+        return  resultado;
+    }
 
 }

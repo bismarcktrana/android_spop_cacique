@@ -20,7 +20,7 @@ import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sdn.bd.dao.TblParametro;
+import com.sdn.bd.dao.host.TblParametro;
 import com.sdn.bd.secutidad.MD5;
 import com.sdn.cacique.bdremote.BDOperacion_Update;
 import com.sdn.cacique.util.ConfApp;

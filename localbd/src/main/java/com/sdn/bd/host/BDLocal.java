@@ -2,10 +2,7 @@ package com.sdn.bd.host;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Environment;
 import android.widget.Toast;
-
-import com.sdn.bd.dao.TblParametro;
 
 import java.io.File;
 import java.io.FileOutputStream;

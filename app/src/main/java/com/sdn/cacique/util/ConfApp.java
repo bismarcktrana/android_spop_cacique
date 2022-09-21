@@ -5,7 +5,8 @@ import android.provider.Settings;
 
 import java.util.Arrays;
 
-import com.sdn.bd.dao.TblParametro;
+import com.sdn.bd.dao.host.TblParametro;
+import com.sdn.bd.objeto.host.Contenedor;
 import com.sdn.bd.objeto.host.Operador;
 import com.sdn.bd.objeto.host.Parametro;
 import com.sdn.bd.objeto.softland.Pedido;
@@ -40,6 +41,7 @@ public class ConfApp {
     ///////////////////////////////////////////////////////  CLASES  GLOBALES DE TRABAJO DEL SISTEMA  ///////////////////////////////////////////
 
     public static Pedido ORDEN_TRABAJADA_ACTUALMENTE= new Pedido();
+    public static Contenedor CONTENEDOR_ACTUALMENTE= new Contenedor();
     public static Operador OPERADORLOGEADO = new Operador();
     public static BDOperacion_Update BDOPERATION_SINCRONIZAR;
     public static BDOperacion BDOPERATION;
@@ -258,7 +260,7 @@ public class ConfApp {
 
             TblParametro.guardar(pantalla,new Parametro("HOST_LOCATION",Utils.bd.createWorkDirectory(pantalla,pantalla.getResources().getString(R.string.app_name))) );
 
-            String SERVIDOR = "192.168.1.77:1433";
+            String SERVIDOR = "192.168.1.42:1433";
 
             TblParametro.guardar(pantalla,new Parametro("SERVER_SOFTLANDERP",MD5.Encriptar(pantalla,SERVIDOR)) );
             TblParametro.guardar(pantalla,new Parametro("BDNAME_SOFTLANDERP",MD5.Encriptar(pantalla,"CtrlSoftland")) );

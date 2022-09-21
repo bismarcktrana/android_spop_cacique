@@ -2,7 +2,7 @@ package com.sdn.bd.secutidad;
 
 import android.content.Context;
 
-import com.sdn.bd.dao.TblParametro;
+import com.sdn.bd.dao.host.TblParametro;
 
 import org.apache.commons.codec.binary.Base64;
 

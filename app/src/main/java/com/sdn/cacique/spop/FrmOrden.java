@@ -11,12 +11,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,15 +38,16 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.sdn.bd.dao.host.TblLectura;
 import com.sdn.bd.dao.host.TblLecturaEliminada;
 import com.sdn.bd.dao.produccion.TblCamion;
+import com.sdn.bd.dao.produccion.TblProducto;
 import com.sdn.bd.dao.softland.TblBodega;
 import com.sdn.bd.dao.softland.TblConductor;
 import com.sdn.bd.dao.softland.TblPedido;
 import com.sdn.bd.dao.softland.TblPedido_Detalle;
 import com.sdn.bd.objeto.host.Lectura;
 import com.sdn.bd.objeto.produccion.Camion;
+import com.sdn.bd.objeto.produccion.Producto;
 import com.sdn.bd.objeto.softland.Conductor;
 import com.sdn.bd.objeto.softland.Pedido;
-import com.sdn.bd.objeto.softland.Pedido_Detalle;
 import com.sdn.cacique.bdremote.BDOperacion_Update;
 import com.sdn.cacique.util.ConfApp;
 import com.sdn.cacique.util.Utils;
@@ -95,7 +98,6 @@ public class FrmOrden extends AppCompatActivity {
                 } else {
                     new BDPedido_actualizar(FrmOrden.this).execute();
                 }
-                //new BDServidor(FrmOrdenes.this, ConfApp.METHOD_GETORDERS).execute();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -136,8 +138,44 @@ public class FrmOrden extends AppCompatActivity {
 
                 ((TextView) convertView.findViewById(R.id.i04_lblMarchamoNombre)).setText("" + obj_orden.getMarchamo());
 
+                String PROCESS_NAME="PENDIENTE";
+                Drawable PROCESS_COLOR=((TextView) convertView.findViewById(R.id.i04_lblEstadonombre)).getBackground();//getResources().getDrawable(R.color.md_theme_light_primary);
+                Integer PROCESS_TEXT_COLOR=getResources().getColor(R.color.md_theme_light_primary);//getResources().getColor(R.color.md_theme_light_primary);
 
-                if (!obj_orden.getAtentido() && obj_orden.getFecha_inicio() == null && obj_orden.getFecha_fin() == null) {
+                if(obj_orden.getAtentido()){
+                    if(obj_orden.getFecha_inicio() != null){
+                        if(obj_orden.getFecha_fin()==null){
+                            if(TblLectura.obtenerNoFilas(FrmOrden.this,obj_orden.getId())>0){
+                                PROCESS_NAME="EN PROCESO";
+                                PROCESS_COLOR = getResources().getDrawable(R.color.yellow);
+                                PROCESS_TEXT_COLOR = getResources().getColor(R.color.md_theme_light_secondary);
+                            }else{
+                                PROCESS_NAME="ABIERTA";
+                                PROCESS_COLOR = getResources().getDrawable(R.color.lightyellow);
+                                PROCESS_TEXT_COLOR = getResources().getColor(R.color.md_theme_light_secondary);
+                            }
+                        }else{
+                            PROCESS_NAME="FINALIZADO";
+                            PROCESS_COLOR = getResources().getDrawable(R.color.green);
+                            PROCESS_TEXT_COLOR = getResources().getColor(R.color.md_theme_light_onPrimary);
+                        }
+                    }else{
+                        // PROCESS_NAME="PENDIENTE";
+                        // PROCESS_COLOR = ((TextView) convertView.findViewById(R.id.i04_lblEstadonombre)).getBackground();
+                        // PROCESS_TEXT_COLOR = getResources().getColor(R.color.md_theme_light_primary);
+                    }
+                }else{//NO ESTA SIENDO ATENDIDO
+                   // PROCESS_NAME="PENDIENTE";
+                   // PROCESS_COLOR = ((TextView) convertView.findViewById(R.id.i04_lblEstadonombre)).getBackground();
+                   // PROCESS_TEXT_COLOR = getResources().getColor(R.color.md_theme_light_primary);
+                }
+
+                ((TextView) convertView.findViewById(R.id.i04_lblEstadonombre)).setText(PROCESS_NAME);
+                ((TextView) convertView.findViewById(R.id.i04_lblEstadonombre)).setTextColor(PROCESS_TEXT_COLOR);
+                convertView.findViewById(R.id.i04_lblEstadonombre).setBackground(PROCESS_COLOR);
+
+
+                /*if (!obj_orden.getAtentido() && obj_orden.getFecha_inicio() == null && obj_orden.getFecha_fin() == null) {
                     ((TextView) convertView.findViewById(R.id.i04_lblEstadonombre)).setText("PENDIENTE");
                     convertView.findViewById(R.id.i04_lblEstadonombre).setBackground(convertView.getBackground());
                 }
@@ -151,7 +189,7 @@ public class FrmOrden extends AppCompatActivity {
                     ((TextView) convertView.findViewById(R.id.i04_lblEstadonombre)).setText("FINALIZADO");
                     ((TextView) convertView.findViewById(R.id.i04_lblEstadonombre)).setTextColor(Color.WHITE);
                     convertView.findViewById(R.id.i04_lblEstadonombre).setBackground(getResources().getDrawable(R.color.green));
-                }
+                }*/
 
                 convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -209,31 +247,37 @@ public class FrmOrden extends AppCompatActivity {
         // Image and text item data's key.
         String CUSTOM_ADAPTER_IMAGE = "image";
         String CUSTOM_ADAPTER_TEXT = "text";
+        ArrayList<Lectura> lectura_temp = TblLectura.obtenerRegistrosXOrden(FrmOrden.this, obj_orden.getId());
 
         ArrayList<String> operacion = new ArrayList<String>();
         ArrayList<Integer> Iconoperacion = new ArrayList<Integer>();
 
-        if (obj_orden.getFecha_fin() == null) {//NO ESTA FINALIZADA LA ORDEN -TRABAJAR ORDEN
+        //NO ORDEN NO ESTA FINALIZADA SE PUEDE  LA TRABAJAR ORDEN
+        if (obj_orden.getFecha_fin() == null) {//obj_orden.getIdservidor() == 0 &&
             operacion.add(getResources().getString(R.string.i04_menu_orden));
             Iconoperacion.add(R.drawable.ic_action_workorden);
         }
 
-        if (obj_orden.getIdservidor() == 0) {//NO ESTA FINALIZADA LA ORDEN  && TblLectura.obtenerRegistros(FrmOrdenes.this, obj_orden.getId()).size() > 0
+        //BAJAR LECTURAS DE LA ORDEN
+        if (obj_orden.getIdservidor() != 0 && lectura_temp.size() > 0) {//obj_orden.getIdservidor() == 0 &&
             operacion.add(getResources().getString(R.string.i04_menu_archivo));
             Iconoperacion.add(R.drawable.ic_action_reporte);
         }
 
-        if (obj_orden.getFecha_fin() != null && obj_orden.getIdservidor() == 0) {//ESTA FINALIZADA LA ORDEN Y NO ENVIADO AL SERVIDOR
+        //SI LA ORDEN HA SIDO CERRADA Y NO SE A NOTIFICADO DEL CIERRE, SE PUEDE REAPERTURAR.
+        if (obj_orden.getFecha_fin() != null && obj_orden.getIdservidor() != 0) {//&& obj_orden.getIdservidor() == 0
             operacion.add(getResources().getString(R.string.i04_menu_aperturar));
             Iconoperacion.add(R.drawable.ic_action_open_again);
         }
 
-        if (obj_orden.getFecha_fin() == null && obj_orden.getFecha_inicio() != null) {//ESTA FINALIZADA LA ORDEN Y NO ENVIADO AL SERVIDOR
+        //SI LA ORDEN ESTA ABIERTA(EN PROCESO) Y NO FINALIZADO) PUEDE REINICARLA
+        if (obj_orden.getFecha_inicio() != null && obj_orden.getFecha_fin() == null && !obj_orden.getAtentido()) {
             operacion.add(getResources().getString(R.string.i04_menu_reset));
             Iconoperacion.add(R.drawable.ic_action_reset_pedido);
         }
 
-        if (obj_orden.getFecha_fin() == null && obj_orden.getIdservidor() == 0) {//NO ESTA FINALIZADA LA ORDEN
+        //SI LA ORDEN NO SE HA INICIADO PUEDE ACTUALIZARLA
+        if (obj_orden.getFecha_inicio()==null && obj_orden.getFecha_fin() == null && obj_orden.getIdservidor() != 0   && lectura_temp.size() == 0) {//&& obj_orden.getIdservidor() == 0
             operacion.add(getResources().getString(R.string.i04_menu_actualizar));
             Iconoperacion.add(R.drawable.ic_action_update_from_server);
         }
@@ -241,16 +285,16 @@ public class FrmOrden extends AppCompatActivity {
         operacion.add(getResources().getString(R.string.i04_menu_detalle));
         Iconoperacion.add(R.drawable.ic_action_aditional_detail);
 
-        // Each image in array will be displayed at each item beginning.
+        // CADA IMAGEN EN EL ARREGLO SERA MOSTRADA AL INICIO DE CADA ITEM
         Integer[] imageIdArr = Iconoperacion.toArray(new Integer[Iconoperacion.size()]);// ArrayUtils.toPrimitive();
 
-        // Each item text.
+        // TEXTO DE CADA ITEM.
         final String[] listItemArr = operacion.toArray(new String[operacion.size()]);
 
-        // Create SimpleAdapter list data.
+        // SE CREA DATOS EN UN SimpleAdapter
         List<Map<String, Object>> dialogItemList = new ArrayList<Map<String, Object>>();
-        int listItemLen = listItemArr.length;
-        for (int i = 0; i < listItemLen; i++) {
+
+        for (int i = 0; i < listItemArr.length; i++) {
             Map<String, Object> itemMap = new HashMap<String, Object>();
             itemMap.put(CUSTOM_ADAPTER_IMAGE, imageIdArr[i]);
             itemMap.put(CUSTOM_ADAPTER_TEXT, listItemArr[i]);
@@ -282,22 +326,7 @@ public class FrmOrden extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int itemIndex) {
 
                 if (listItemArr[itemIndex].equals(getResources().getString(R.string.i04_menu_orden))) {
-
-                    System.out.println("idcamion retorna" + obj_orden.getCamion().getId());
-                    if (obj_orden.getCamion().getId() == null || obj_orden.getCamion().getId() == 0) {
-                        mostrarPopupSeleccionarCamion(obj_orden);
-                    } else {
-                        Camion camion = TblCamion.obtenerRegistro(FrmOrden.this, obj_orden.getCamion().getId());
-                        obj_orden.setCamion(camion);//CARGAMOS LA INFORMACION COMPLETA DEL CAMION, NO SOLO EL INDICE
-
-                        if (obj_orden.getConductor().getId() == null || obj_orden.getConductor().getId().isEmpty()) {
-                            mostrarPopupSeleccionarConductor(obj_orden);
-                        }else{
-                            Conductor conductor = TblConductor.obtenerRegistro(FrmOrden.this,obj_orden.getConductor().getId());
-                            obj_orden.setConductor(conductor);
-                            mostrarPopupAprobarOrdenTrabajo(obj_orden);
-                        }
-                    }
+                    mostrarPopupAprobarOrdenTrabajo(obj_orden);
                 }
 
                 if (listItemArr[itemIndex].equals(getResources().getString(R.string.i04_menu_archivo))) {
@@ -312,12 +341,11 @@ public class FrmOrden extends AppCompatActivity {
                             "<font color='#ff0000'>" + obj_orden.getCliente() + "?</font>" +
                             "</DIV>";
 
-
                     AlertDialog.Builder builder = new AlertDialog.Builder(FrmOrden.this);
                     builder.setIcon(R.drawable.img_logo);
                     builder.setMessage(Html.fromHtml(Cuerpo))
                             .setCancelable(false)
-                            .setTitle("Aprobar abrir orden")
+                            .setTitle(Html.fromHtml("ABRIR ORDEN <font color='#FF7F27'>" + obj_orden.getId() + "</font>"))
                             .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
@@ -374,7 +402,7 @@ public class FrmOrden extends AppCompatActivity {
                                 "<font color='#ff0000'>" + obj_orden.getId() + "</font><BR></BR></BR>" +
                                 "<font color='#000000'>Cliente</font><BR>" +
                                 "<font color='#ff0000'>" + obj_orden.getCliente() + "?</font></BR>" +
-                                "<font style='color:#000000;'><BR>Todas las cajas leidas seran eliminadas de forma local:</font><BR>" +
+                                "<font style='color:#000000;'><BR>Todas las cajas leidas seran regresadas al Inventario</font><BR>" +
                                 "</DIV>";
 
                         builder.setMessage(Html.fromHtml(Cuerpo))
@@ -464,6 +492,61 @@ public class FrmOrden extends AppCompatActivity {
         });
         builder.create();
         builder.show();
+    }
+
+    private void mostrarPopupAprobarOrdenTrabajo(Pedido obj_orden) {
+        String Cuerpo = "<DIV  style='text-align:center'>" +
+                "<font style='color:#000000;'>Desea trabajar la orden:</font><BR>" +
+                "<font color='#ff0000'>" + obj_orden.getId() + "</font><BR></BR></BR>" +
+                "<font color='#000000'>Cliente</font><BR>" +
+                "<font color='#ff0000'>" + obj_orden.getCliente() + "?</font>" +
+                "</DIV>";
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(FrmOrden.this);
+        builder.setIcon(R.drawable.img_logo);
+        builder.setMessage(Html.fromHtml(Cuerpo))
+                .setCancelable(false)
+                .setTitle("TRABAJAR ORDEN")
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                })
+                .setPositiveButton("SI",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                if (obj_orden.getCamion().getId() == null || obj_orden.getCamion().getId() == 0) {
+                                    mostrarPopupSeleccionarCamion(obj_orden);
+                                } else {
+                                    Camion camion = TblCamion.obtenerRegistro(FrmOrden.this, obj_orden.getCamion().getId());
+                                    obj_orden.setCamion(camion);//CARGAMOS LA INFORMACION COMPLETA DEL CAMION, NO SOLO EL INDICE
+                                    Log.i(this.getClass().getName(),"Camion seleccionado: "+ camion.toString2());
+
+                                    if (obj_orden.getConductor().getId() == null || obj_orden.getConductor().getId().isEmpty()) {
+                                        mostrarPopupSeleccionarConductor(obj_orden);
+                                    }else{
+                                        Conductor conductor = TblConductor.obtenerRegistro(FrmOrden.this,obj_orden.getConductor().getId());
+                                        obj_orden.setConductor(conductor);
+                                        Log.i(this.getClass().getName(),"Conductor seleccionado: "+ camion.toString2());
+                                        mostrarFormularioExaneoxPedido(obj_orden);
+                                    }
+                                }
+
+                                //cambiamos la activaidad
+                               /* ArrayList<Pedido_Detalle> detalle = TblPedido_Detalle.obtenerRegistrosxPedido(FrmOrden.this, obj_orden.getId());
+
+                                ConfApp.ORDEN_TRABAJADA_ACTUALMENTE = new Pedido();
+                                ConfApp.ORDEN_TRABAJADA_ACTUALMENTE = obj_orden;
+                                ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.setBodega(TblBodega.obtenerRegistro(FrmOrden.this, obj_orden.getIdBodega()));
+                                ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.setPedido_detalle(detalle);
+
+                                Log.i(this.getClass().getName(),"Orden seleccionado: "+ ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.toString2());
+                                Intent nuevaPantalla = new Intent(FrmOrden.this, FrmEscaneoxPedido.class);
+                                startActivity(nuevaPantalla);*/
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void mostrarPopupSeleccionarCamion(Pedido obj_pedido) {
@@ -557,10 +640,9 @@ public class FrmOrden extends AppCompatActivity {
         ListView lv_conductor;
         TextInputEditText txtBuscarConductor;
 
-
         final RelativeLayout panel = (RelativeLayout) LayoutInflater.from(FrmOrden.this).inflate(R.layout.frm_lista, null);
         AlertDialog.Builder componente = new AlertDialog.Builder(FrmOrden.this);
-        componente.setTitle("Seleccionar conductor");
+        componente.setTitle("SELECCIONAR CONDUCTOR");
 
         final ImageButton btnAgrearConductor = panel.findViewById(R.id.btnAgregar);
         btnAgrearConductor.setVisibility(View.INVISIBLE);//(ConfApp.USER_DTS || ConfApp.USER_SUPERVISOR) ? View.VISIBLE : View.INVISIBLE
@@ -623,52 +705,34 @@ public class FrmOrden extends AppCompatActivity {
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
                 Conductor item = (Conductor) arg0.getItemAtPosition(position);
                 obj_pedido.setConductor(item);
-                TblPedido.modificar(FrmOrden.this, obj_pedido);
-                mostrarPopupAprobarOrdenTrabajo(obj_pedido);
+                mostrarFormularioExaneoxPedido(obj_pedido);
                 FrmSeleccionarConductor.dismiss();
             }
         });
     }
 
-    private void mostrarPopupAprobarOrdenTrabajo(Pedido obj_orden) {
-        String Cuerpo = "<DIV  style='text-align:center'>" +
-                "<font style='color:#000000;'>Desea trabajar la orden:</font><BR>" +
-                "<font color='#ff0000'>" + obj_orden.getId() + "</font><BR></BR></BR>" +
-                "<font color='#000000'>Cliente</font><BR>" +
-                "<font color='#ff0000'>" + obj_orden.getCliente() + "?</font>" +
-                "</DIV>";
+    private void mostrarFormularioExaneoxPedido(Pedido obj_orden){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try  {
+                    obj_orden.setBodega(TblBodega.obtenerRegistro(FrmOrden.this, obj_orden.getIdBodega()));
+                    obj_orden.setAtentido(true);
+                    ConfApp.BDOPERATION.guardar_orden(obj_orden);//GUARDAR O ACTUALIZAR EN EL SERVIDOR
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(FrmOrden.this);
-        builder.setIcon(R.drawable.img_logo);
-        builder.setMessage(Html.fromHtml(Cuerpo))
-                .setCancelable(false)
-                .setTitle("Aprobar orden de trabajo")
-                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
+                    if(TblPedido.modificar(FrmOrden.this, obj_orden)){
+                        ConfApp.ORDEN_TRABAJADA_ACTUALMENTE = obj_orden;
+                        Intent nuevaPantalla = new Intent(FrmOrden.this, FrmEscaneoxPedido.class);
+                        startActivity(nuevaPantalla);
+                    }else{
+                        Toast.makeText(FrmOrden.this, "la orden no se puedo modificar"+obj_orden.toString2(), Toast.LENGTH_SHORT).show();
                     }
-                })
-                .setPositiveButton("SI",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                //cambiamos la activaidad
-                                ArrayList<Pedido_Detalle> detalle = TblPedido_Detalle.obtenerRegistrosxPedido(FrmOrden.this, obj_orden.getId());
-
-                                ConfApp.ORDEN_TRABAJADA_ACTUALMENTE = new Pedido();
-                                ConfApp.ORDEN_TRABAJADA_ACTUALMENTE = obj_orden;
-                                ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.setBodega(TblBodega.obtenerRegistro(FrmOrden.this, obj_orden.getIdBodega()));
-                                ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.setPedido_detalle(detalle);
-
-                                System.out.println("Trabajando Orden" + ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.toString2());
-                                for (int it = 0; it < detalle.size(); it++) {
-                                    System.out.println("Item" + detalle.get(it).toString2());
-                                }
-                                Intent nuevaPantalla = new Intent(FrmOrden.this, FrmEscaneoxPedido.class);
-                                startActivity(nuevaPantalla);
-                            }
-                        });
-        AlertDialog alert = builder.create();
-        alert.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
     }
 
     public void notificarActualizacionDePedidos(boolean SERVER_WAS_ONLINE, int ContRegistros, String Mensaje) {
@@ -734,7 +798,6 @@ class BDPedido_actualizar extends AsyncTask {
                                 conError += 1;
                                 //Log.i("Pedido_error", Registros.get(contP).toString2());
                             } else {
-
                                 conCorrect += 1;
                                 //Log.i("Pedido_correcto", Registros.get(contP).toString2());
                             }
@@ -800,17 +863,30 @@ class BDPedido_reiniciar extends AsyncTask {
         boolean resultado = false;
         String[] args = new String[]{"" + obj_orden.getId()};
 
+        obj_orden.getCamion().setId(0);
+        obj_orden.getConductor().setId("");
+        obj_orden.getOperador().setId(0);
+        obj_orden.setMarchamo("");
+        obj_orden.setAtentido(false);
+        obj_orden.setEstado(0);
         obj_orden.setFecha_inicio(null);
         obj_orden.setFecha_fin(null);
-        obj_orden.setAtentido(false);
-        obj_orden.getOperador().setId(0);
-        obj_orden.getCamion().setId(0);
-        obj_orden.getConductor().setId(null);
 
-        if (TblPedido.modificar(referencia, obj_orden)) {
-            ArrayList<Lectura> Registros = TblLectura.obtenerRegistrosXOrden(referencia, obj_orden.getId());
-            TblLectura.borrarLecturaxOrden(referencia,obj_orden.getId());
-            resultado = true;
+        if(ConfApp.BDOPERATION.guardar_orden(obj_orden)){
+            if (TblPedido.modificar(referencia, obj_orden)) {
+                ArrayList<Lectura> Registros = TblLectura.obtenerRegistrosXOrden(referencia, obj_orden.getId());
+                for(int it=0 ; it< Registros.size();it++){
+                    Lectura lectura = Registros.get(it);
+                    Producto producto = TblProducto.obtenerRegistroxCodigo(referencia,lectura.getCodigo());
+                    if(ConfApp.BDOPERATION.actualizar_existencia(producto.getCodigo_softland(),obj_orden.getBodega().getId(),lectura.getPeso())){
+                        if(ConfApp.BDOPERATION.borrar_Caja(lectura.getBarra()))
+                            TblLectura.borrarCaja(referencia,lectura.getBarra());
+                        //TblLectura.borrarLecturaxOrden(referencia,obj_orden.getId());
+                    }
+                }
+                ConfApp.BDOPERATION.borrar_pedido(obj_orden);
+                resultado = true;
+            }
         }
 
         return resultado;
@@ -852,8 +928,7 @@ class BDPedido_reiniciar extends AsyncTask {
 class BDPedido_importar extends AsyncTask{
 
     BDOperacion_Update operacion = new BDOperacion_Update();
-    int conCorrect = 0, conError = 0;
-    ProgressDialog progressDialog;
+   ProgressDialog progressDialog;
     Context referencia;
     Pedido obj_orden;
 

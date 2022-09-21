@@ -18,6 +18,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".FrmContenedor"
+            android:exported="true" />
+        <activity
+            android:name=".FrmEscaneoLibre"
+            android:exported="true" />
+        <activity
             android:name=".FrmEscaneoxPedido"
             android:exported="true" />
         <activity

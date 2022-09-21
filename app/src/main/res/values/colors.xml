@@ -17,6 +17,7 @@
     <color name="green">#1B5E20</color>
     <color name="lightGreed">#219939</color>
     <color name="yellow">#fada65</color>
+    <color name="lightyellow">#EFE4BC</color>
 
     <!--MATERIAL COLOR-->
     <color name="md_theme_light_primary">#006590</color>

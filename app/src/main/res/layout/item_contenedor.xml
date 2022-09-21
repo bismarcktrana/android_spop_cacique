@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/i06_lblContenedor"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="@string/i06_lblcontenedor"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/i06_txtContenedor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="false"
+        android:layout_toEndOf="@+id/i06_lblContenedor"
+        android:textColor="@color/zebra_blue"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/i06_lblFechaCreacion"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i06_txtContenedor"
+        android:layout_marginStart="5dp"
+        android:text="@string/i06_lblFechacreacion"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/i06_txtFechaCreacion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i06_txtContenedor"
+        android:layout_toEndOf="@+id/i06_lblContenedor"
+        android:textColor="@color/zebra_blue"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/i06_lblFechaInicio"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i06_lblFechaCreacion"
+        android:layout_marginStart="5dp"
+        android:text="@string/i06_lblFechainicio"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/i06_txtFechaInicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i06_lblFechaCreacion"
+        android:layout_toEndOf="@+id/i06_lblFechaInicio"
+        android:textColor="@color/zebra_blue"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/i06_lblFechaFin"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i06_lblFechaInicio"
+        android:layout_marginStart="5dp"
+        android:text="@string/i06_lblFechafin"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/i06_txtFechaFin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i06_lblFechaInicio"
+        android:layout_toEndOf="@+id/i06_lblFechaFin"
+        android:textColor="@color/zebra_blue"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/i06_lblEstado"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i06_lblFechaFin"
+        android:layout_marginStart="5dp"
+        android:text="@string/i04_lblEstado"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/i06_txtEstado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i06_lblFechaFin"
+        android:layout_toEndOf="@id/i06_lblEstado"
+        android:textColor="@color/zebra_blue"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/view"
+        style="@style/Divider_Horizontal"
+        android:layout_below="@id/i06_lblEstado"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="false"
+        android:layout_marginTop="4dp"
+        android:visibility="visible" />
+
+</RelativeLayout>

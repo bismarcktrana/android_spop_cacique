@@ -238,6 +238,10 @@ public class Pedido {
     }
 
     public String toString2() {
+        StringBuffer items = new StringBuffer();
+        for (int it = 0; it < pedido_detalle.size(); it++)
+            items.append("Item #"+(it+1) + pedido_detalle.get(it).toString2());
+
         return "Pedido{" +
                 "Id='" + Id + '\'' +
                 ", fecha=" + Utils.C_DateToDBFORMAT(fecha) +
@@ -257,6 +261,6 @@ public class Pedido {
                 ", camion=" + camion.toString2() +
                 ", conductor=" + conductor.toString2() +
                 ", operador=" + operador.toString2() +
-                '}';
+                '}'+"\n"+items.toString();
     }
 }

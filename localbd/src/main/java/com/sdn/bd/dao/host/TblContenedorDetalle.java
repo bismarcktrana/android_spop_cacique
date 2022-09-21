@@ -6,15 +6,15 @@ import android.database.Cursor;
 
 import com.sdn.bd.host.BDLocal;
 import com.sdn.bd.host.BDUtil;
+import com.sdn.bd.objeto.host.Contenedor_Detalle;
 import com.sdn.bd.objeto.host.Lectura;
-import com.sdn.bd.objeto.host.LecturaEliminada;
 import com.sdn.bd.util.Utils;
 
 import java.util.ArrayList;
 
-public class TblLectura {
-    public static final String table_name ="host_lectura";
-    private static final String table_fields="id,fecha,fecha_proceso,codigo,peso,piezas,serie,barra,idcamion,idconductor,idorden,idservidor,idoperador";
+public class TblContenedorDetalle {
+    public static final String table_name ="host_contenedor_detalle";
+    private static final String table_fields="id,fecha_creacion,fecha_proceso,codigo,peso,piezas,serie,barra,tipo,idcontenedor,idoperador,idservidor";
     private static final String table_where = "id=?";
     private static final String table_where2 = "barra=?";
 
@@ -43,17 +43,17 @@ public class TblLectura {
         BDUtil.EmptyTable(contexto,table_name,null,null);
     }
 
-    public static boolean guardar(Context contexto, Lectura objeto) {
+    public static boolean guardar(Context contexto, Contenedor_Detalle objeto) {
         long resultado = -1;
         ContentValues nuevoRegistro = new ContentValues();
         objeto.setId(objeto.getId() < 1 ? nuevoID(contexto) : objeto.getId());
 
         nuevoRegistro.put("id", objeto.getId());
 
-        if (objeto.getFecha() == null)
-            nuevoRegistro.putNull("fecha");
+        if (objeto.getFecha_creacion() == null)
+            nuevoRegistro.putNull("fecha_creacion");
         else
-            nuevoRegistro.put("fecha", Utils.C_DateToDBFORMAT(objeto.getFecha_proceso()));
+            nuevoRegistro.put("fecha_creacion", Utils.C_DateToDBFORMAT(objeto.getFecha_creacion()));
 
         if (objeto.getFecha_proceso() == null)
             nuevoRegistro.putNull("fecha_proceso");
@@ -65,27 +65,25 @@ public class TblLectura {
         nuevoRegistro.put("piezas", objeto.getPiezas());
         nuevoRegistro.put("serie", objeto.getSerie());
         nuevoRegistro.put("barra", objeto.getBarra());
-        nuevoRegistro.put("idcamion", objeto.getIdcamion());
-        nuevoRegistro.put("idconductor", objeto.getIdconductor());
-        nuevoRegistro.put("idorden", objeto.getIdorden());
-        nuevoRegistro.put("idservidor", objeto.getIdservidor());
+        nuevoRegistro.put("tipo", objeto.getTipo());
+        nuevoRegistro.put("idcontenedor", objeto.getIdcontenedor());
         nuevoRegistro.put("idoperador", objeto.getIdoperador());
+        nuevoRegistro.put("idservidor", objeto.getIdservidor());
 
         resultado= BDUtil.InsertRow(contexto,table_name,null,nuevoRegistro);
         return resultado > 0;
     }
 
-    public static boolean modificar(Context contexto, Lectura objeto) {
+    public static boolean modificar(Context contexto, Contenedor_Detalle objeto) {
         long resultado = -1;
         String[] args = new String[]{"" + objeto.getId()};
 
         ContentValues nuevoRegistro = new ContentValues();
-        nuevoRegistro.put("id", objeto.getId());
 
-        if (objeto.getFecha() == null)
-            nuevoRegistro.putNull("fecha");
+        if (objeto.getFecha_creacion() == null)
+            nuevoRegistro.putNull("fecha_creacion");
         else
-            nuevoRegistro.put("fecha", Utils.C_DateToDBFORMAT(objeto.getFecha_proceso()));
+            nuevoRegistro.put("fecha_creacion", Utils.C_DateToDBFORMAT(objeto.getFecha_creacion()));
 
         if (objeto.getFecha_proceso() == null)
             nuevoRegistro.putNull("fecha_proceso");
@@ -97,19 +95,18 @@ public class TblLectura {
         nuevoRegistro.put("piezas", objeto.getPiezas());
         nuevoRegistro.put("serie", objeto.getSerie());
         nuevoRegistro.put("barra", objeto.getBarra());
-        nuevoRegistro.put("idcamion", objeto.getIdcamion());
-        nuevoRegistro.put("idconductor", objeto.getIdconductor());
-        nuevoRegistro.put("idorden", objeto.getIdorden());
-        nuevoRegistro.put("idservidor", objeto.getIdservidor());
+        nuevoRegistro.put("tipo", objeto.getTipo());
+        nuevoRegistro.put("idcontenedor", objeto.getIdcontenedor());
         nuevoRegistro.put("idperador", objeto.getIdoperador());
+        nuevoRegistro.put("idservidor", objeto.getIdservidor());
 
        resultado = BDUtil.UpdateRow(contexto,table_name,"id=?",args,nuevoRegistro);
 
         return resultado > 0;
     }
 
-    public static ArrayList<Lectura> obtenerRegistros(Context contexto) {
-        ArrayList<Lectura> Lista = new ArrayList<Lectura>();
+    public static ArrayList<Contenedor_Detalle> obtenerRegistros(Context contexto) {
+        ArrayList<Contenedor_Detalle> Lista = new ArrayList<Contenedor_Detalle>();
 
         BDLocal.abrir(contexto);
 
@@ -117,21 +114,20 @@ public class TblLectura {
 
         if (result.getCount() != 0) {
             if (result.moveToFirst()) {
-                do {//id,fecha,codigo,peso,piezas,serie,barra,idcamion,iconductor,idorden,idservidor,idoperador
-                    Lectura objeto = new Lectura();
+                do {//id,fecha_creacion,fecha_proceso,codigo,peso,piezas,serie,barra,tipo,idcontenedor,idoperador,idservidor
+                    Contenedor_Detalle objeto = new Contenedor_Detalle();
                     objeto.setId(result.getInt(0));
-                    objeto.setFecha(Utils.C_BDFormatToDate(result.getString(1)));
+                    objeto.setFecha_creacion(Utils.C_BDFormatToDate(result.getString(1)));
                     objeto.setFecha_proceso(Utils.C_BDFormatToDateTime(result.getString(2)));
                     objeto.setCodigo(result.getString(3));
                     objeto.setPeso(result.getDouble(4) );
                     objeto.setPiezas(result.getInt(5));
                     objeto.setSerie(result.getString(6));
                     objeto.setBarra(result.getString(7));
-                    objeto.setIdcamion(result.getInt(8));
-                    objeto.setIdconductor(result.getString(9));
-                    objeto.setIdorden(result.getString(10));
-                    objeto.setIdservidor(result.getInt(11));
-                    objeto.setIdoperador(result.getInt(12));
+                    objeto.setTipo(result.getInt(8));
+                    objeto.setIdcontenedor(result.getString(9));
+                    objeto.setIdservidor(result.getInt(10));
+                    objeto.setIdoperador(result.getInt(11));
                     Lista.add(objeto);
                 } while (result.moveToNext());
             }
@@ -141,9 +137,9 @@ public class TblLectura {
         return Lista;
     }
 
-    public static Lectura obtenerRegistroXId(Context contexto, String id) {
+    public static Contenedor_Detalle obtenerRegistroXId(Context contexto, String id) {
         String[] args = new String[]{id};
-        Lectura objeto = new Lectura();
+        Contenedor_Detalle objeto = new Contenedor_Detalle();
 
         BDLocal.abrir(contexto);
 
@@ -151,20 +147,19 @@ public class TblLectura {
 
         if (result.getCount() != 0) {
             if (result.moveToFirst()) {
-                do {//id,fecha,codigo,peso,piezas,serie,barra,idcamion,iconductor,idorden,idservidor,idoperador
+                do {//id,fecha_creacion,fecha_proceso,codigo,peso,piezas,serie,barra,tipo,idcontenedor,idoperador,idservidor
                     objeto.setId(result.getInt(0));
-                    objeto.setFecha(Utils.C_BDFormatToDate(result.getString(1)));
+                    objeto.setFecha_creacion(Utils.C_BDFormatToDate(result.getString(1)));
                     objeto.setFecha_proceso(Utils.C_BDFormatToDateTime(result.getString(2)));
                     objeto.setCodigo(result.getString(3));
                     objeto.setPeso(result.getDouble(4) );
                     objeto.setPiezas(result.getInt(5));
                     objeto.setSerie(result.getString(6));
                     objeto.setBarra(result.getString(7));
-                    objeto.setIdcamion(result.getInt(8));
-                    objeto.setIdconductor(result.getString(9));
-                    objeto.setIdorden(result.getString(10));
-                    objeto.setIdservidor(result.getInt(11));
-                    objeto.setIdoperador(result.getInt(12));
+                    objeto.setTipo(result.getInt(8));
+                    objeto.setIdcontenedor(result.getString(9));
+                    objeto.setIdservidor(result.getInt(10));
+                    objeto.setIdoperador(result.getInt(11));
                 } while (result.moveToNext());
             }
         }
@@ -173,9 +168,9 @@ public class TblLectura {
         return objeto;
     }
 
-    public static Lectura obtenerRegistroXCodigoBarra(Context contexto, String barra) {
+    public static Contenedor_Detalle obtenerRegistroXCodigoBarra(Context contexto, String barra) {
         String[] args = new String[]{barra};
-        Lectura objeto = new Lectura();
+        Contenedor_Detalle objeto = new Contenedor_Detalle();
 
         BDLocal.abrir(contexto);
 
@@ -183,20 +178,19 @@ public class TblLectura {
 
         if (result.getCount() != 0) {
             if (result.moveToFirst()) {
-                do {//id,fecha,codigo,peso,piezas,serie,barra,idcamion,iconductor,idorden,idservidor,idoperador
+                do {//id,fecha_creacion,fecha_proceso,codigo,peso,piezas,serie,barra,tipo,idcontenedor,idoperador,idservidor
                     objeto.setId(result.getInt(0));
-                    objeto.setFecha(Utils.C_BDFormatToDate(result.getString(1)));
+                    objeto.setFecha_creacion(Utils.C_BDFormatToDate(result.getString(1)));
                     objeto.setFecha_proceso(Utils.C_BDFormatToDateTime(result.getString(2)));
                     objeto.setCodigo(result.getString(3));
                     objeto.setPeso(result.getDouble(4) );
                     objeto.setPiezas(result.getInt(5));
                     objeto.setSerie(result.getString(6));
                     objeto.setBarra(result.getString(7));
-                    objeto.setIdcamion(result.getInt(8));
-                    objeto.setIdconductor(result.getString(9));
-                    objeto.setIdorden(result.getString(10));
-                    objeto.setIdservidor(result.getInt(11));
-                    objeto.setIdoperador(result.getInt(12));
+                    objeto.setTipo(result.getInt(8));
+                    objeto.setIdcontenedor(result.getString(9));
+                    objeto.setIdservidor(result.getInt(10));
+                    objeto.setIdoperador(result.getInt(11));
                 } while (result.moveToNext());
             }
         }
@@ -205,15 +199,15 @@ public class TblLectura {
         return objeto;
     }
 
-    public static ArrayList<Lectura> obtenerRegistrosNOEnviados(Context contexto, int idorden) {
-        String table_where =" WHERE _idservidor=0";
+    public static ArrayList<Contenedor_Detalle> obtenerRegistrosNOEnviados(Context contexto, int idcontenedor) {
+        String table_where =" WHERE idservidor=0";
         String SQLQUERY = SQLObtenerRegistros+ table_where;
-        ArrayList<Lectura> registros = new ArrayList<Lectura>();
+        ArrayList<Contenedor_Detalle> registros = new ArrayList<Contenedor_Detalle>();
         String[] args = null;
 
-        if (idorden != 0 ) {
-            SQLQUERY += " AND idorden=?";
-            args = new String[]{"" + idorden};
+        if (idcontenedor != 0 ) {
+            SQLQUERY += " AND idcontenedor=?";
+            args = new String[]{"" + idcontenedor};
         }
 
         BDLocal.abrir(contexto);
@@ -222,20 +216,19 @@ public class TblLectura {
         if (result.getCount() != 0) {
             if (result.moveToFirst()) {
                 do {
-                    Lectura objeto = new Lectura();
+                    Contenedor_Detalle objeto = new Contenedor_Detalle();
                     objeto.setId(result.getInt(0));
-                    objeto.setFecha(Utils.C_BDFormatToDate(result.getString(1)));
+                    objeto.setFecha_creacion(Utils.C_BDFormatToDate(result.getString(1)));
                     objeto.setFecha_proceso(Utils.C_BDFormatToDateTime(result.getString(2)));
                     objeto.setCodigo(result.getString(3));
                     objeto.setPeso(result.getDouble(4) );
                     objeto.setPiezas(result.getInt(5));
                     objeto.setSerie(result.getString(6));
                     objeto.setBarra(result.getString(7));
-                    objeto.setIdcamion(result.getInt(8));
-                    objeto.setIdconductor(result.getString(9));
-                    objeto.setIdorden(result.getString(10));
-                    objeto.setIdservidor(result.getInt(11));
-                    objeto.setIdoperador(result.getInt(12));
+                    objeto.setTipo(result.getInt(8));
+                    objeto.setIdcontenedor(result.getString(9));
+                    objeto.setIdservidor(result.getInt(10));
+                    objeto.setIdoperador(result.getInt(11));
                     registros.add(objeto);
                 } while (result.moveToNext());
             }
@@ -262,30 +255,29 @@ public class TblLectura {
         return resultado;
     }
 
-    public static ArrayList<Lectura> obtenerRegistrosXOrden(Context contexto, String idorden) {
-        ArrayList<Lectura> registros = new ArrayList<Lectura>();
-        String[] args = new String[]{"" + idorden};
+    public static ArrayList<Contenedor_Detalle> obtenerRegistrosXContenedor(Context contexto, Integer idcontenedor) {
+        ArrayList<Contenedor_Detalle> registros = new ArrayList<Contenedor_Detalle>();
+        String[] args = new String[]{"" + idcontenedor};
 
         BDLocal.abrir(contexto);
-        Cursor result = BDLocal.BD_SQLITE.rawQuery(SQLObtenerRegistros+" WHERE idorden=?", args);
+        Cursor result = BDLocal.BD_SQLITE.rawQuery(SQLObtenerRegistros+" WHERE idcontenedor=?", args);
 
         if (result.getCount() != 0) {
             if (result.moveToFirst()) {
                 do {
-                    Lectura objeto = new Lectura();
+                    Contenedor_Detalle objeto = new Contenedor_Detalle();
                     objeto.setId(result.getInt(0));
-                    objeto.setFecha(Utils.C_BDFormatToDate(result.getString(1)));
+                    objeto.setFecha_creacion(Utils.C_BDFormatToDate(result.getString(1)));
                     objeto.setFecha_proceso(Utils.C_BDFormatToDateTime(result.getString(2)));
                     objeto.setCodigo(result.getString(3));
                     objeto.setPeso(result.getDouble(4) );
                     objeto.setPiezas(result.getInt(5));
                     objeto.setSerie(result.getString(6));
                     objeto.setBarra(result.getString(7));
-                    objeto.setIdcamion(result.getInt(8));
-                    objeto.setIdconductor(result.getString(9));
-                    objeto.setIdorden(result.getString(10));
-                    objeto.setIdservidor(result.getInt(11));
-                    objeto.setIdoperador(result.getInt(12));
+                    objeto.setTipo(result.getInt(8));
+                    objeto.setIdcontenedor(result.getString(9));
+                    objeto.setIdservidor(result.getInt(10));
+                    objeto.setIdoperador(result.getInt(11));
                     registros.add(objeto);
                 } while (result.moveToNext());
             }
@@ -296,10 +288,10 @@ public class TblLectura {
         return registros;
     }
 
-    public static boolean borrarLecturaxOrden(Context contexto, String idorden) {
-        String[] args = new String[]{"" + idorden};
+    public static boolean borrarLecturaxContenedor(Context contexto, Integer idcontenedor) {
+        String[] args = new String[]{ ""+idcontenedor};
         long resultado = -1;
-        resultado= BDUtil.DeleteRow(contexto,table_name,"idorden=?",args);
+        resultado= BDUtil.DeleteRow(contexto,table_name,"idcontenedor=?",args);
         return resultado > 0;
     }
 
@@ -311,13 +303,13 @@ public class TblLectura {
         return resultado > 0;
     }
 
-    public static Integer obtenerNoFilas(Context contexto, String idorden) {
+    public static Integer obtenerNoFilas(Context contexto, Integer idcontenedor) {
         ArrayList<Lectura> registros = new ArrayList<Lectura>();
-        String[] args = new String[]{"" + idorden};
+        String[] args = new String[]{"" + idcontenedor};
         Integer cantidad =0;
 
         BDLocal.abrir(contexto);
-        Cursor result = BDLocal.BD_SQLITE.rawQuery(SQLObtenerRegistros+" WHERE idorden=?", args);
+        Cursor result = BDLocal.BD_SQLITE.rawQuery(SQLObtenerRegistros+" WHERE idcontenedor=?", args);
 
         if (result.getCount() != 0) {
            cantidad = result.getCount();
@@ -328,23 +320,4 @@ public class TblLectura {
         return cantidad;
     }
 
-   /* public static Double obtenerPesoXCamion(Context contexto, Integer idCamion) {
-        String[] args = new String[]{"" + idCamion};
-        Boolean resultado = false;
-        String TMP_SQL ="SELECT IFNULL(SUM(peso),0) AS SUMA FROM " + table_name +" WHERE idcamion=?";
-        Double peso =0.0;
-
-        BDLocal.abrir(contexto);
-        Cursor result = BDLocal.BD_SQLITE.rawQuery(TMP_SQL, args);
-        if (result.getCount() != 0) {
-            if (result.moveToFirst()) {
-                do {
-                    peso = result.getDouble(0);
-                } while (result.moveToNext());
-            }
-        }
-        result.close();
-        BDLocal.cerrar();
-        return peso;
-    }*/
 }

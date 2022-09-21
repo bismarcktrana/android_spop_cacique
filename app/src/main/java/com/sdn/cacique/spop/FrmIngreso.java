@@ -18,8 +18,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sdn.bd.dao.TblOperador;
-import com.sdn.bd.dao.TblParametro;
+import com.sdn.bd.dao.host.TblOperador;
+import com.sdn.bd.dao.host.TblParametro;
 import com.sdn.bd.objeto.host.Operador;
 import com.sdn.bd.secutidad.MD5;
 import com.sdn.cacique.util.ConfApp;
@@ -149,7 +149,12 @@ public class FrmIngreso extends AppCompatActivity {
                 if(TblParametro.getClave(getApplication(),TEMP_PARAMETRO).isEmpty()){
                     Toast.makeText(FrmIngreso.this ,String.format(getResources().getString(R.string.lblParametroNoExiste),TEMP_PARAMETRO),Toast.LENGTH_LONG).show();
                 }else{
-                    if(TEMP_PARAMETRO.equals("UUID") || TEMP_PARAMETRO.equals("SERVER") || TEMP_PARAMETRO.equals("BDNAMECATALOG") ||TEMP_PARAMETRO.equals("BDUSER") ||TEMP_PARAMETRO.equals("BDPASS") ||TEMP_PARAMETRO.equals("system_user")||TEMP_PARAMETRO.equals("system_pass")||TEMP_PARAMETRO.equals("user_policies")||TEMP_PARAMETRO.equals("register_policies")||TEMP_PARAMETRO.equals("export_policies")||TEMP_PARAMETRO.equals("import_policies")||TEMP_PARAMETRO.equals("partial_import_policies"))
+                    if(TEMP_PARAMETRO.equals("UUID") || TEMP_PARAMETRO.equals("SERVER") ||
+                            TEMP_PARAMETRO.equals("BDNAMECATALOG") ||TEMP_PARAMETRO.equals("BDUSER") ||
+                            TEMP_PARAMETRO.equals("BDPASS") ||TEMP_PARAMETRO.equals("SYSTEM_USER")||
+                            TEMP_PARAMETRO.equals("SYSTEM_PASS")||TEMP_PARAMETRO.equals("user_policies")||
+                            TEMP_PARAMETRO.equals("register_policies")||TEMP_PARAMETRO.equals("export_policies")||
+                            TEMP_PARAMETRO.equals("import_policies")||TEMP_PARAMETRO.equals("partial_import_policies"))
                         TEMP_VALOR = MD5.Encriptar(FrmIngreso.this,TEMP_VALOR);
 
                     if(TblParametro.modificar(getApplicationContext(),TEMP_PARAMETRO,TEMP_VALOR)){
