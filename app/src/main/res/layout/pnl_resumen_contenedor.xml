@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    tools:context=".PnlConsolidado">
+
+    <com.evrencoskun.tableview.TableView
+        android:id="@+id/p12_tblconsolidado"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="70dp"
+        android:background="@android:drawable/editbox_background"
+        app:selected_color="@color/table_view_default_selected_background_color"
+        app:shadow_color="@color/table_view_default_selected_background_color"></com.evrencoskun.tableview.TableView>
+
+    <Button
+        android:id="@+id/p12_btnFinalizar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/p12_tblconsolidado"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="-60dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/zebra_blue"
+        android:text="Finalizar Orden"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp" />
+</RelativeLayout>

@@ -75,7 +75,7 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
     private TextView txtLectura, txtcodigo, txtdescripcion, txtcaja, txtpeso, txtlote, txtserie, txtfechasacrificio, txtfechaproceso, txtfechavencimiento, txtpesototal, txtcantidadcajas;
     private TextView lblBodegaNombre, txtCamion, txtConductor, txtMarchamo;
 
-    FrmEcaneoxPedidoAdapter2 adaptador;
+    AdapterPedido adaptador;
     ViewPager2 viewPager;
     TabLayout tabLayout;
     TabLayoutMediator mediator;
@@ -83,7 +83,7 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
     String codigoAEliminar = "";
 
     PnlLectura pnlLectura = null;
-    PnlConsolidado pnlconsolidado = null;
+    PnlResumenPedido pnlconsolidado = null;
     PnlDetalle pnldetalle = null;
     //Object[] detalle = null;
     Lectura obj_lectura = new Lectura();
@@ -196,6 +196,7 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frm_escaneoxpedido);
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -209,7 +210,7 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
         viewPager = findViewById(R.id.pager);
         viewPager.setOffscreenPageLimit(2);//mantenemos cargadoen memoria las pentanas
 
-        adaptador = new FrmEcaneoxPedidoAdapter2(getSupportFragmentManager(), getLifecycle());
+        adaptador = new AdapterPedido(getSupportFragmentManager(), getLifecycle());
         viewPager.setAdapter(adaptador);
 
         mediator = new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
@@ -275,7 +276,7 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
                 }
 
                 if (position == 1) {
-                    pnlconsolidado = (PnlConsolidado) adaptador.createFragment(position);
+                    pnlconsolidado = (PnlResumenPedido) adaptador.createFragment(position);
                     preparePnlResumen(pnlconsolidado.getView());
                 }
 
@@ -377,12 +378,12 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
                             if (ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getAtentido())
                                 continuar_Comprobacion(codigo);
                             else {
-                                mostrarFormularioMensaje("ORDEN NO DISPONIBLE", "LA ORDEN <font color='#FF7F27'>" + ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getId() + "</font> DEL CLIENTE: " + ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getCliente() + ", NO SE PUEDE MODIFICAR", sound.msg_error, R.color.red, true);
+                                mostrarFormularioMensaje("ORDEN NO DISPONIBLE", "LA ORDEN <font color='#FF7F27'>" + ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getId() + "</font> DEL CLIENTE: " + ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getCliente() + ", NO SE PUEDE MODIFICAR", sound.msg_caja_invalida, R.color.red, true);
                             }
                             return true;
                         } else {
                             //System.out.println(codigo.length()+" "+Boolean.valueOf(estaLeyendo)+""+Boolean.valueOf(Utils.esCodigoValido(codigo)));
-                            sound.play_error();
+                            sound.play_lectura_error();
                             tabLayout.setBackgroundColor(getResources().getColor(R.color.red));
                             mostrarTimerInmediatamente();
                             return false;
@@ -468,27 +469,27 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
                                                                 ConfApp.BDOPERATION.guardar_orden(ConfApp.ORDEN_TRABAJADA_ACTUALMENTE);
                                                             }
                                                         } else {//ERROR AL GUARDAR
-                                                            mostrarFormularioMensaje("ERROR AL GUARDAR", "NO SE PUDO GUARDAR LA LECTURA", sound.msg_error, R.color.red, true);
+                                                            mostrarFormularioMensaje("ERROR AL GUARDAR", "NO SE PUDO GUARDAR LA LECTURA", sound.msg_caja_invalida, R.color.red, true);
                                                         }
                                                     }
                                                 } else {
-                                                    mostrarFormularioMensaje("PESO EXCEDIDO", "EL PRODUCTO " + obj_producto.getNombre() + ", EXCEDE EL PESO PERMITIDO POR EL CAMION", sound.msg_error, R.color.red, true);
+                                                    mostrarFormularioMensaje("PESO EXCEDIDO", "EL PRODUCTO " + obj_producto.getNombre() + ", EXCEDE EL PESO PERMITIDO POR EL CAMION", sound.msg_caja_invalida, R.color.red, true);
                                                 }
                                             } else {//DETALLE DE PRODUCTO COMPLETO
-                                                mostrarFormularioMensaje("PESO EXCEDIDO", "EL PRODUCTO " + obj_producto.getNombre() + ", EXCEDE EL PESO PERMITIDO PARA LA ORDEN", sound.msg_error, R.color.red, true);
+                                                mostrarFormularioMensaje("PESO EXCEDIDO", "EL PRODUCTO " + obj_producto.getNombre() + ", EXCEDE EL PESO PERMITIDO PARA LA ORDEN", sound.msg_caja_invalida, R.color.red, true);
                                             }
                                         } else {//DETALLE DE PRODUCTO COMPLETO
-                                            mostrarFormularioMensaje("CAJA REGISTRADA", "CAJA " + codigo_barra + ",<BR>YA FUE REGISTRADA POR OTRO OPERARIO", sound.msg_error, R.color.red, true);
+                                            mostrarFormularioMensaje("CAJA REGISTRADA", "CAJA " + codigo_barra + ",<BR>YA FUE REGISTRADA POR OTRO OPERARIO", sound.msg_caja_invalida, R.color.red, true);
                                         }
                                     } else {
-                                        mostrarFormularioMensaje("CAJA REPETIDA", "CAJA " + codigo_barra + ",<BR>YA ESTA REGISTRADA", sound.msg_error, R.color.red, true);
+                                        mostrarFormularioMensaje("CAJA REPETIDA", "CAJA " + codigo_barra + ",<BR>YA ESTA REGISTRADA", sound.msg_caja_invalida, R.color.red, true);
                                     }
                                 } else {
-                                    mostrarFormularioMensaje("USUARIO ADMINISTRADOR", "ESTE USUARIO NO PUEDE REGISTRAR OPERACIONES", sound.msg_error, R.color.red, true);
+                                    mostrarFormularioMensaje("USUARIO ADMINISTRADOR", "ESTE USUARIO NO PUEDE REGISTRAR OPERACIONES", sound.msg_caja_invalida, R.color.red, true);
                                 }
                             } else {//EL PRODUCTO NO TIENE SUFICIENTE EXISTENCIA EN LA BODEGA
                                 temp = "<BR>EL PRODUCTO<BR><font color='#FF7F27'>NOMBRE:</font> " + obj_producto.getNombre() + ", <BR>NO CUENTA CON EXISTENCIA SUFICIENTE";
-                                mostrarFormularioMensaje("PRODUCTO SIN EXISTENCIA ", temp, sound.msg_error, R.color.red, true);
+                                mostrarFormularioMensaje("PRODUCTO SIN EXISTENCIA ", temp, sound.msg_caja_invalida, R.color.red, true);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -498,11 +499,11 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
                 thread.start();
             } else {//PRODUCTO NO SOLICITADO EN LA ORDEN
                 temp = "<BR>EL PRODUCTO<BR><font color='#FF7F27'>NOMBRE:</font> " + obj_producto.getNombre() + ", <BR>NO FUE SOLICITADO EN ESTA ORDEN";
-                mostrarFormularioMensaje("PRODUCTO NO SOLICITADO EN LA ORDEN ", temp, sound.msg_error, R.color.red, true);
+                mostrarFormularioMensaje("PRODUCTO NO SOLICITADO EN LA ORDEN ", temp, sound.msg_caja_invalida, R.color.red, true);
             }
         } else {//EL PRODUCTO NO ESTA REGISTRADO
             temp += "<BR>EL PRODUCTO NO ESTA REGISTRADO";
-            mostrarFormularioMensaje("PRODUCTO NO ESTA REGISTRADO", temp, sound.msg_error, R.color.red, true);
+            mostrarFormularioMensaje("PRODUCTO NO ESTA REGISTRADO", temp, sound.msg_caja_invalida, R.color.red, true);
         }
     }
 
@@ -510,7 +511,7 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                sound.play(sound.msg_ok);
+                sound.play(sound.msg_caja_disponible);
                 tabLayout.setBackgroundColor(getResources().getColor(R.color.lightGreed));
                 viewPager.setBackgroundColor(getResources().getColor(R.color.lightGreed));
                 mostrarTimer();
@@ -525,7 +526,7 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                sound.play(sound.msg_error);
+                sound.play(sound.msg_caja_invalida);
                 tabLayout.setBackgroundColor(getResources().getColor(R.color.red));
                 viewPager.setBackgroundColor(getResources().getColor(R.color.red));
                 mostrarTimer();
@@ -567,7 +568,6 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
             }
         });
     }
-
 
     //cambiarpor showMessageBox
     private void mostrarFormularioMensaje(String Titulo, String cuerpoMensaje, Integer sonido, Integer color, boolean MostrarMensaje) {
@@ -700,7 +700,7 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
                 // if (!ConfApp.USER_ESTIBADOR) return;
 
                 if (ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getMarchamo().isEmpty()) {
-                    mostrarFormularioMensaje("DATOS INCOMPLETO", "Favor ingresar el marchamo para cerrar la orden", sound.msg_error, R.color.red, true);
+                    mostrarFormularioMensaje("DATOS INCOMPLETO", "Favor ingresar el marchamo para cerrar la orden", sound.msg_caja_invalida, R.color.red, true);
                     txtMarchamo.requestFocus();
                     return;
                 }
@@ -1074,7 +1074,7 @@ public class FrmEscaneoxPedido extends AppCompatActivity {
                 try  {
                     if(ConfApp.BDOPERATION.guardar_orden(ConfApp.ORDEN_TRABAJADA_ACTUALMENTE)){
                         if (TblPedido.modificar(FrmEscaneoxPedido.this, ConfApp.ORDEN_TRABAJADA_ACTUALMENTE)) {
-                            mostrarFormularioMensaje("Cierre de Orden", "Se ha cerrado la orden " + ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getId(), sound.msg_ok, R.color.green, true);
+                            mostrarFormularioMensaje("Cierre de Orden", "Se ha cerrado la orden " + ConfApp.ORDEN_TRABAJADA_ACTUALMENTE.getId(), sound.msg_caja_disponible, R.color.green, true);
                         } else {
                             Toast.makeText(FrmEscaneoxPedido.this, "No se modifico", Toast.LENGTH_SHORT);
                         }

@@ -1,19 +1,18 @@
 package com.sdn.cacique.spop;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link PnlConsolidado#newInstance} factory method to
+ * Use the {@link PnlResumenPedido#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PnlConsolidado extends Fragment {
+public class PnlResumenPedido extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +23,7 @@ public class PnlConsolidado extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public PnlConsolidado() {
+    public PnlResumenPedido() {
         // Required empty public constructor
     }
 
@@ -37,8 +36,8 @@ public class PnlConsolidado extends Fragment {
      * @return A new instance of fragment PnlConsolidado.
      */
     // TODO: Rename and change types and number of parameters
-    public static PnlConsolidado newInstance(String param1, String param2) {
-        PnlConsolidado fragment = new PnlConsolidado();
+    public static PnlResumenPedido newInstance(String param1, String param2) {
+        PnlResumenPedido fragment = new PnlResumenPedido();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -58,6 +57,6 @@ public class PnlConsolidado extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.pnl_resumen, container, false);
+        return inflater.inflate(R.layout.pnl_resumen_pedido, container, false);
     }
 }

@@ -10,13 +10,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-public class FrmEcaneoxPedidoAdapter2 extends FragmentStateAdapter {
+public class AdapterPedido extends FragmentStateAdapter {
     private static final String ARG_OBJECT = "object";
     PnlLectura pnllectura = new PnlLectura();
-    PnlConsolidado pnlresumen = new PnlConsolidado();
+    PnlResumenPedido pnlresumen = new PnlResumenPedido();
     PnlDetalle pnldetalle = new PnlDetalle();
 
-    public FrmEcaneoxPedidoAdapter2(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
+    public AdapterPedido(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
     }
     /*public FrmEcaneoxPedidoAdapter2(FrmEscaneoxPedido frmEscaneoxPedido) {

@@ -419,7 +419,6 @@ public class FrmContenedor extends AppCompatActivity {
         componente.show();
     }
 
-
     private void mostrarPopupAprobarDocumento(Contenedor obj_orden) {
         String Cuerpo = "<DIV  style='text-align:center'>" +
                 "<font style='color:#000000;'>Desea trabajar el documento:</font><BR>" +

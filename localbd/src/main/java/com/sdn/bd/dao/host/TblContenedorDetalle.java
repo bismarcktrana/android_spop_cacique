@@ -53,12 +53,12 @@ public class TblContenedorDetalle {
         if (objeto.getFecha_creacion() == null)
             nuevoRegistro.putNull("fecha_creacion");
         else
-            nuevoRegistro.put("fecha_creacion", Utils.C_DateToDBFORMAT(objeto.getFecha_creacion()));
+            nuevoRegistro.put("fecha_creacion",Utils.C_TimeStampToDBFORMAT(objeto.getFecha_proceso()));
 
         if (objeto.getFecha_proceso() == null)
             nuevoRegistro.putNull("fecha_proceso");
         else
-            nuevoRegistro.put("fecha_proceso", Utils.C_TimeStampToDBFORMAT(objeto.getFecha_proceso()));
+            nuevoRegistro.put("fecha_proceso", Utils.C_DateToDBFORMAT(objeto.getFecha_creacion()));
 
         nuevoRegistro.put("codigo", objeto.getCodigo());
         nuevoRegistro.put("peso", objeto.getPeso());
@@ -83,12 +83,12 @@ public class TblContenedorDetalle {
         if (objeto.getFecha_creacion() == null)
             nuevoRegistro.putNull("fecha_creacion");
         else
-            nuevoRegistro.put("fecha_creacion", Utils.C_DateToDBFORMAT(objeto.getFecha_creacion()));
+            nuevoRegistro.put("fecha_creacion",Utils.C_TimeStampToDBFORMAT(objeto.getFecha_proceso()));
 
         if (objeto.getFecha_proceso() == null)
             nuevoRegistro.putNull("fecha_proceso");
         else
-            nuevoRegistro.put("fecha_proceso", Utils.C_TimeStampToDBFORMAT(objeto.getFecha_proceso()));
+            nuevoRegistro.put("fecha_proceso", Utils.C_DateToDBFORMAT(objeto.getFecha_creacion()));
 
         nuevoRegistro.put("codigo", objeto.getCodigo());
         nuevoRegistro.put("peso", objeto.getPeso());
