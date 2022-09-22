@@ -47,93 +47,128 @@ public class Utils {
         return PATH_DIRECTORYWORK;
     }
 
-    /**
-     * ESTE METODO CONVIERTE UNA FECHA DE LA LIBRERIA java.util.Date a un formato a un formato permitido por sqlite y devuelto en forma de cadena
-     *
-     * @param fecha
-     * @return
-     */
-    public static String C_DateToDBFORMAT(Date fecha) {
-        ConfApp.ISO8601_FORMATTER = new SimpleDateFormat(ConfApp.ISO8601_FORMATDATE_BD);
-        return fecha == null ? null : ConfApp.ISO8601_FORMATTER.format(fecha);
-    }
 
     /**
-     * FUNCION QUE CONVIERTE UNA CADENA yyyy-MM-dd a Date
+     * FUNCION QUE CONVIERTE UNA CADENA yyyy-MM-dd HH:mm:ss a Date
      *
      * @param
      * @return
      */
-    public static Date C_BDFormatToDate(String cadena) {
-        ConfApp.ISO8601_FORMATTER = new SimpleDateFormat(ConfApp.ISO8601_FORMATDATE_BD);
-
-        if (cadena != null) {
-            try {
-                return ConfApp.ISO8601_FORMATTER.parse(cadena);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }else{
-            System.out.println("C_BDFormatToDate null:" +cadena);
-        }
-        return null;
-    }
-
-    /**
-     * FUNCION QUE CONVIERTE UNA CADENA yyyy-MM-dd a Date
-     *
-     * @param
-     * @return
-     */
-    public static Date C_BDFormatToDateTime(String cadena) {
-        ConfApp.ISO8601_FORMATTER = new SimpleDateFormat(ConfApp.ISO8601_FORMATTIMESTAMP_BD);
-
-        if (cadena != null) {
-            try {
-                return ConfApp.ISO8601_FORMATTER.parse(cadena);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }else{
-            System.out.println("C_BDFormatToDateTime null:" +cadena);
-        }
-        return null;
-    }
-
-    /**
-     * ESTE METODO CONVIERTE UNA FECHA DE LA LIBRERIA java.util.Date a un formato a un formato permitido por sqlite y devuelto en forma de cadena
-     *
-     * @param fecha
-     * @return
-     */
-    public static String C_TimeStampToDBFORMAT(Date fecha) {
-        ConfApp.ISO8601_FORMATTER = new SimpleDateFormat(ConfApp.ISO8601_FORMATTIMESTAMP_BD);
-        return fecha == null ? null : ConfApp.ISO8601_FORMATTER.format(new java.sql.Date(fecha.getTime()));
-    }
-
-    public static String C_TimeStampToCustom(Date fecha, String format) {
-        ConfApp.ISO8601_FORMATTER = new SimpleDateFormat(format);
-        return fecha == null ? null : ConfApp.ISO8601_FORMATTER.format(new java.sql.Date(fecha.getTime()));
-    }
-
-    /**
-     * FUNCION QUE CONVIERTE UNA CADENA yyyy-MM-dd a Date
-     *
-     * @param cadena
-     * @return
-     */
-    public static Date C_StringToObjetTimeStamp(String cadena) {
-        ConfApp.ISO8601_FORMATTER = new SimpleDateFormat(ConfApp.ISO8601_FORMATTIMESTAMP_BD);
+    public static Date Convert_BDTimeStamp_To_Date(String cadena) {
+        /*ConfApp.ISO8601_FORMATTER = new SimpleDateFormat(ConfApp.ISO8601_FORMATTIMESTAMP_BD);
         try {
             return cadena == null ? null : ConfApp.ISO8601_FORMATTER.parse(cadena);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        return null;*/
+        return  Convert_BDDate_To_CustomFormat(cadena,ConfApp.ISO8601_FORMATTIMESTAMP_BD,"Convert_BDTimeStamp_To_Date");
+    }
+
+    /**
+     * FUNCION QUE CONVIERTE UNA CADENA yyyy-MM-dd a Date
+     *
+     * @param
+     * @return
+     */
+    public static Date Convert_BDDate_To_Date(String cadena) {
+        /*ConfApp.ISO8601_FORMATTER = new SimpleDateFormat(ConfApp.ISO8601_FORMATDATE_BD);
+
+        if (cadena != null) {
+            try {
+                return ConfApp.ISO8601_FORMATTER.parse(cadena);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }else{
+            System.out.println("Convert_BDDate_To_Date null:" +cadena);
+        }
+        return null;*/
+        return  Convert_BDDate_To_CustomFormat(cadena,ConfApp.ISO8601_FORMATDATE_BD,"Convert_BDDate_To_Date");
+    }
+
+    public static Date Convert_BDDate_To_CustomFormat(String cadena,String format,String Metodo) {
+        ConfApp.ISO8601_FORMATTER = new SimpleDateFormat(format);
+
+        if (cadena != null) {
+            try {
+                return ConfApp.ISO8601_FORMATTER.parse(cadena);
+            } catch (ParseException e) {
+                System.out.println("Error al convertir la cadena "+ cadena +" en :" +Metodo+"="+e.getMessage());
+                e.printStackTrace();
+            }
+        }else{
+            System.out.println("la cadena en :" +Metodo+"=null ");
+        }
         return null;
     }
 
-    public static String C_DateToAppFormat(Date fecha) {
+
+    /**
+     * ESTE METODO CONVIERTE UNA FECHA DE LA LIBRERIA java.util.Date a un formato a un formato permitido por sqlite y devuelto en forma de cadena
+     *
+     * @param fecha
+     * @return
+     */
+    public static String Convert_Date_To_DBTimeStamp(Date fecha) {
+        //ConfApp.ISO8601_FORMATTER = new SimpleDateFormat(ConfApp.ISO8601_FORMATTIMESTAMP_BD);
+        //return fecha == null ? null : ConfApp.ISO8601_FORMATTER.format(new java.sql.Date(fecha.getTime()));
+        return Convert_Date_To_DBCustomFormat(fecha,ConfApp.ISO8601_FORMATTIMESTAMP_BD,"Convert_Date_To_DBTimeStamp");
+    }
+
+    /**
+     * ESTE METODO CONVIERTE UNA FECHA DE LA LIBRERIA java.util.Date a un formato a un formato permitido por sqlite y devuelto en forma de cadena
+     *
+     * @param fecha
+     * @return
+     */
+    public static String Convert_Date_To_DBDate(Date fecha) {
+        //ConfApp.ISO8601_FORMATTER = new SimpleDateFormat(ConfApp.ISO8601_FORMATDATE_BD);
+        //return fecha == null ? null : ConfApp.ISO8601_FORMATTER.format(fecha);
+        return Convert_Date_To_DBCustomFormat(fecha,ConfApp.ISO8601_FORMATDATE_BD,"Convert_Date_To_DBDate");
+    }
+
+    /**
+     * ESTE METODO CONVIERTE UNA FECHA DE LA LIBRERIA java.util.Date a un formato a un formato establecido por el usuario compatible con sqlite y devuelto en forma de cadena
+     *
+     * @param fecha
+     * @return
+     */
+    public static String Convert_Date_To_DBCustomFormat(Date fecha, String format) {
+        //ConfApp.ISO8601_FORMATTER = new SimpleDateFormat(format);
+        //return fecha == null ? null : ConfApp.ISO8601_FORMATTER.format(new java.sql.Date(fecha.getTime()));
+        return Convert_Date_To_DBCustomFormat(fecha,format,"Convert_Date_To_DBCustomFormat");
+    }
+
+    private static String Convert_Date_To_DBCustomFormat(Date fecha, String format,String Metodo) {
+        String resultado =null;
+        ConfApp.ISO8601_FORMATTER = new SimpleDateFormat(format);
+
+        if(fecha !=null){
+            try {
+                resultado = ConfApp.ISO8601_FORMATTER.format(new java.sql.Date(fecha.getTime()));
+            } catch (Exception e) {
+                System.out.println("Exception en el metodo " +Metodo+" "+e.getMessage());
+                e.printStackTrace();
+            }
+        }else
+            System.out.println("Error en el metodo " +Metodo+" fecha=null");
+
+        return resultado;
+    }
+
+    public static String Convert_Date_To_AppTimeStamp(Date fecha) {
+        ConfApp.ISO8601_FORMATTER = new SimpleDateFormat(ConfApp.ISO8601_FORMATTIMESTAMP_APP);
+        return fecha == null ? null : ConfApp.ISO8601_FORMATTER.format(fecha);
+    }
+
+    public static String Convert_Date_To_AppDate(Date fecha) {
         ConfApp.ISO8601_FORMATTER = new SimpleDateFormat(ConfApp.ISO8601_FORMATDATE_APP);
+        return fecha == null ? null : ConfApp.ISO8601_FORMATTER.format(fecha);
+    }
+
+    public static String Convert_Date_To_AppHour(Date fecha) {
+        ConfApp.ISO8601_FORMATTER = new SimpleDateFormat(ConfApp.ISO8601_FORMATHOUR_APP);
         return fecha == null ? null : ConfApp.ISO8601_FORMATTER.format(fecha);
     }
 
